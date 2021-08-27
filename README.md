@@ -8,6 +8,11 @@ Installation:
 4. activate virtual env: source venv/bin/activate
 5. install requirements: pip install -r req.txt
 
+Migrate db:
+1. flask db init
+2. flask db migrate -m "somrthing"
+3. flask db upgrade
+
 start app:
 1. flask run
 
