@@ -11,6 +11,7 @@ migrate = Migrate(app, db)
 from app import models
 from app.main import bp as main_bp
 # from app.api import bp as api_bp
+from app.models import User, Organization, Product
 
 app.register_blueprint(main_bp)
 # app.register_blueprint(api_bp, prefix="/api")
@@ -19,4 +20,7 @@ app.register_blueprint(main_bp)
 @app.shell_context_processor
 def make_shell_contex():
     return {'db':db,
+            'User':User,
+            'Org':Organization,
+            'Prod':Product,
              }
