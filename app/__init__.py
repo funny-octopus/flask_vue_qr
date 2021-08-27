@@ -12,10 +12,12 @@ login = LoginManager(app)
 
 from app import models
 from app.main import bp as main_bp
+from app.errors import bp as errors_bp
 # from app.api import bp as api_bp
 from app.models import User, Organization, Product
 
 app.register_blueprint(main_bp)
+app.register_blueprint(errors_bp)
 # app.register_blueprint(api_bp, prefix="/api")
 
 
