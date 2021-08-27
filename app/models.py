@@ -14,7 +14,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"<User {name}>"
+        return f"<User {self.name}>"
 
 
 class Organization(db.Model):
@@ -25,7 +25,7 @@ class Organization(db.Model):
     products = db.relationship('Product', backref='provider', lazy='dynamic')
 
     def __repr__(self):
-        return f"<Org {name}>"
+        return f"<Org {self.name}>"
 
 
 class Product(db.Model):
@@ -37,5 +37,5 @@ class Product(db.Model):
     prov = db.Column(db.Integer, db.ForeignKey('organization.id'))
 
     def __repr__(self):
-        return f"<Product {name}>"
+        return f"<Product {self.name}>"
 
