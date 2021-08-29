@@ -49,7 +49,7 @@ class Product(db.Model):
     image_url = db.Column(db.String(64))
     article = db.Column(db.String(64), index=True)
     factory = db.Column(db.Integer, db.ForeignKey('factory.id'))
-    contry = db.Column(db.String(64))
+    country = db.Column(db.String(64))
     collection = db.Column(db.String(64))
     price = db.Column(db.Integer)
     price_v = db.Column(db.String(24)) # цена за шт. или м2
@@ -57,12 +57,12 @@ class Product(db.Model):
     percent = db.Column(db.Integer) # процент накрутки
     count = db.Column(db.Integer)
 
-    def __init__(self, name, category, factory, contry, collection,\
+    def __init__(self, name, category, factory, country, collection,\
             price, price_v, price_m, percent, count):
         self.name = name
         self.category = category
         self.factory = factory
-        self.contry = contry
+        self.country = country
         self.collection = collection
         self.price = price
         self.price_v = price_v

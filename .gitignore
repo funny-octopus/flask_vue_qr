@@ -134,3 +134,6 @@ app.db
 
 # migrations
 migrations/
+
+# images
+images/

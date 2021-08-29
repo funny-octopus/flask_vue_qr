@@ -1,8 +1,8 @@
 from app import app, db
 from app.main import bp
-from app.models import User
+from app.models import User, Product, Factory
 from app.main.forms import LoginForm
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, abort
 from flask_login import current_user, login_user
 
 
@@ -14,7 +14,15 @@ def index():
 
 @bp.route('/item/<ident>', methods=['GET'])
 def item(ident):
-    return ident
+    product = Product.query.get_or_404(ident)
+    items = db.session.query(Product, Factory)\
+            .filter_by(id=int(ident))\
+            .join(Factory)\
+            .first()
+    if current_user.is_authenticated:
+        return render_template('main/managed_item.html')
+    else:
+        return render_template('main/item.html', product=items[0], factory=items[1])
 
 
 @bp.route('/auth/login', methods=['GET', 'POST'])

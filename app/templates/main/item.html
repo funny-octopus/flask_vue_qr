@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            <img class="rounded img-thumbnail" src="{{ url_for('static',filename='images/default.png') }}" alt="Изображение товара" />
+        </div>         
+        <div class="col-12 col-sm-8">
+            <ul class="list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-start"><strong>Фабрика:</strong></span>
+                    <span class="text-end">{{factory.name}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-start"><strong>Страна:</strong></span>
+                    <span class="text-end">{{product.country}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-start"><strong>Артикул:</strong></span>
+                    <span class="text-end">{{product.article}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-start"><strong>Цена:</strong></span>
+                    <span class="text-end">{{product.price}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-start"><strong>Количество в уупаковке:</strong></span>
+                    <span class="text-end">{{product.count}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div>
+{%endblock content %}
