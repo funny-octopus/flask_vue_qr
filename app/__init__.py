@@ -7,14 +7,14 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, render_as_batch=True)
 login = LoginManager(app)
 
 from app import models
 from app.main import bp as main_bp
 from app.errors import bp as errors_bp
 # from app.api import bp as api_bp
-from app.models import User, Organization, Product
+from app.models import User, Factory, Product, Category
 
 app.register_blueprint(main_bp)
 app.register_blueprint(errors_bp)
@@ -25,6 +25,7 @@ app.register_blueprint(errors_bp)
 def make_shell_contex():
     return {'db':db,
             'User':User,
-            'Org':Organization,
+            'Fac':Factory,
             'Prod':Product,
+            'Cat':Category,
              }
