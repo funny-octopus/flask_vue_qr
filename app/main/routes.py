@@ -20,7 +20,7 @@ def item(ident):
             .join(Factory)\
             .first()
     if current_user.is_authenticated:
-        return render_template('main/managed_item.html')
+        return render_template('main/managed_item.html', product=items[0], factory=items[1], ident=ident)
     else:
         return render_template('main/item.html', product=items[0], factory=items[1])
 

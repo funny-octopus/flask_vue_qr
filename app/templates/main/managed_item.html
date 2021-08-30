@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block custom_head %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock custom_head %}
+
+{% block content %}
+<div id="app" class="container my-3">
+    <input id="ident" type="text" value="{{ ident }}" hidden/>
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            <img class="rounded img-thumbnail" src="{{ url_for('static',filename='images/default.png') }}" alt="Изображение товара" />
+        </div>         
+        <div class="col-12 col-sm-8">
+            <ul class="list-group list-group-flush">
+                <li v-for="(value, name) in product.product" class="list-group-item d-flex justify-content-between">
+                    <strong>[[ value.title ]]</strong>
+                    <select v-if="select_list.includes(name)">
+                        <option>1</option>
+                    </select>
+                    <input v-else type="text" :value="value.value"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='main/js/managed_item.js') }}"></script>
+{% endblock content %}
