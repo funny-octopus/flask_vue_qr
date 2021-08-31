@@ -49,11 +49,11 @@ class Product(db.Model):
     image_url = db.Column(db.String(64))
     article = db.Column(db.String(64), index=True)
     factory = db.Column(db.Integer, db.ForeignKey('factory.id'))
-    country = db.Column(db.String(64))
+    country = db.Column(db.Integer, db.ForeignKey('country.id'))
     collection = db.Column(db.String(64))
     price = db.Column(db.Integer)
-    price_v = db.Column(db.String(24)) # цена за шт. или м2
-    price_m = db.Column(db.String(1)) # валюта e,d,r
+    price_v = db.Column(db.Integer, db.ForeignKey('price_v.id'))
+    price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
     percent = db.Column(db.Integer) # процент накрутки
     count = db.Column(db.Integer)
 
@@ -88,3 +88,29 @@ class Category(db.Model):
 
     def __repr__(self):
         return f"<Category {self.name}>"
+
+
+class Country(db.Model):
+    __tablename__ = "country"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), index=True)
+
+    def __repr__(self):
+        return f"<Country {self.name}>"
+
+
+class Currency(db.Model):
+    __tablename__ = "currency"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), index=True)
+
+    def __repr__(self):
+        return f"<Currency {self.name}>"
+
+class Price_v(db.Model):
+    __tablename__ = "price_v"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), index=True)
+
+    def __repr__(self):
+        return f"<Price_v {self.name}>"

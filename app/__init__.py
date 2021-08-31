@@ -15,7 +15,7 @@ rest_api = Api(app)
 from app import models, api
 from app.main import bp as main_bp
 from app.errors import bp as errors_bp
-from app.models import User, Factory, Product, Category
+from app.models import *
 
 
 app.register_blueprint(main_bp)
@@ -29,4 +29,7 @@ def make_shell_contex():
             'Fac':Factory,
             'Prod':Product,
             'Cat':Category,
+            'Coun':Country,
+            'Cur':Currency,
+            'Prv':Price_v,
              }

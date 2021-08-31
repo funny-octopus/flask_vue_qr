@@ -3,18 +3,21 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         product:null, 
-        select_list:['category', 'factory', 'country', 'price_m', 'price_v'],
+        select_list:['category', 'factory', 'country', 'currency', 'price_v'],
         factories:null,
         categories:null,
+        items:null,
     },
-    beforeMount(){
+    methods:{
+    },
+    created(){
         ident = document.getElementById('ident').value;
         axios.get('/api/item/'+ident)
-            .then(response => (this.product = response.data));
-        axios.get('/api/factories')
-            .then(response => (this.factories = response.data));
-        axios.get('/api/categories')
-            .then(response => (this.categories = response.data));
+            .then(response => (this.product = response.data.product));
+        axios.get('/api/items')
+            .then(response => (this.items = response.data));
+    },
+    beforeMount(){
     },
     mounted(){
     },

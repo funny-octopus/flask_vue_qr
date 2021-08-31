@@ -14,12 +14,13 @@
         </div>         
         <div class="col-12 col-sm-8">
             <ul class="list-group list-group-flush">
-                <li v-for="(value, name) in product.product" class="list-group-item d-flex justify-content-between">
+                <li v-for="(value, name) in product" class="list-group-item d-flex justify-content-between">
                     <strong>[[ value.title ]]</strong>
-                    <select v-if="select_list.includes(name)">
-                        <option>1</option>
+                    <select class="w-50 form-select" v-if="select_list.includes(name)" type="text" v-model="product[name].value">
+                        <option v-for="val in items.items[name]" >[[ val ]]</option>
                     </select>
-                    <input v-else type="text" :value="value.value"/>
+                    <input class="w-50" v-else type="text" v-model="product[name].value"/>
+                    </div>
                 </li>
             </ul>
         </div>
