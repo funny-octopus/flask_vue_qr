@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 engine = create_engine('sqlite:///app.db')
 conn = engine.connect()
 
+e = conn.execute("insert  into user values (1, 'admin', 'pbkdf2:sha256:260000$pxghoNJ8gBuLY7B3$714c91e95b5dc1c738d62ae5b9fc9e274e7f43caa3a7b2bbdad38ff684475a97')")
 e = conn.execute("insert  into country values (1, 'rus')")
 e = conn.execute("insert  into country values (2, 'eng')")
 e = conn.execute("insert  into country values (3, 'ger')")

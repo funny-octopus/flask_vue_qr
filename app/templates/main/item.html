@@ -4,7 +4,7 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-12 col-sm-4">
-            <img class="rounded img-thumbnail" src="{{ url_for('static',filename='images/default.png') }}" alt="Изображение товара" />
+            <img class="rounded img-thumbnail" src="{{ url_for('static',filename='images/'+ product.image_url) }}" alt="Изображение товара" />
         </div>         
         <div class="col-12 col-sm-8">
             <ul class="list-group list-group-flush">
@@ -25,7 +25,7 @@
                     <span>{{product.price}}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span><strong>Количество в уупаковке:</strong></span>
+                    <span><strong>Количество в упаковке:</strong></span>
                     <span>{{product.count}}</span>
                 </li>
             </ul>

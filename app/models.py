@@ -58,7 +58,7 @@ class Product(db.Model):
     count = db.Column(db.Integer)
 
     def __init__(self, name, category, factory, country, collection,\
-            price, price_v, price_m, percent, count):
+            price, price_v, price_m, percent, count, image_url='default.png'):
         self.name = name
         self.category = category
         self.factory = factory
@@ -69,6 +69,7 @@ class Product(db.Model):
         self.price_m = price_m
         self.percent = percent
         self.count = count
+        self.image_url = image_url
 
     def set_article(self)->None:
         "Вычисляет и присваивает внутренний артикул товару"
