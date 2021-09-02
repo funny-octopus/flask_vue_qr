@@ -1,15 +1,71 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ title }}</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-        {% block custom_head %}{% endblock custom_head %}
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main/css/styles.css') }}">
+    <script>
+        function show_element(selector){
+                    var s = document.querySelectorAll(selector);
+                    for (let el of s){
+                        el.classList.toggle("show");
+                    }
+                };
+    </script>
+    {% block custom_head %}{% endblock custom_head %}
+</head>
 
-    <body>
-        {% block content %}{% endblock content %}
-    </body>
+<body>
+    {% if current_user.is_authenticated %}
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-3">
+                <a class="list-group-item list-group-item-action py-2 ripple" href='#'>
+                    <span>Справочники:</span>
+                </a>
+                <a class="list-group-item list-group-item-action py-2 ripple" href='#'>
+                    <span>Клиенты</span>
+                </a>
+                <a class="list-group-item list-group-item-action py-2 ripple" href="#">
+                    <span>Пакет шаблонов</span>
+                </a>
+                <a class="list-group-item list-group-item-action py-2 ripple" href='#'>
+                    <span>Логи:</span>
+                </a>
+                <a class="list-group-item list-group-item-action py-2 ripple" href='#'>
+                    <span>Пользователи</span>
+                </a>
+                <a class="list-group-item list-group-item-action py-2 ripple" href='#'>
+                    <span>Oтчет об окончании срока клиентов</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <nav id="main-navbar"  class="navbar navbar-expand-lg navbar-light bg-info mb-3 fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" onclick="show_element('.sidebar')">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="navbar-brand">
+                <a class='text-decoration-none' href="/"><i class="bi bi-shop-window" style="font-size:1.5rem;color:black;"></i></a>
+                <span class='d-lg-inline collapse'>Панель управления</span>
+            </div>
+            <a class='text-decoration-none' href="/auth/logout">
+                <div>
+                    <i class="bi bi-person-circle" style="font-size:1.5rem;color:black;"></i>
+                    <em class='text-dark d-lg-inline collapse'>Выйти</em>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <main>
+    {% endif %}
+    {% block content %}{% endblock content %}
+    {% if current_user.is_authenticated %}
+    </main>
+    {% endif %}
+</body>
 </html>

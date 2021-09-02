@@ -3,7 +3,7 @@ from app.main import bp
 from app.models import User, Product, Factory, Country
 from app.main.forms import LoginForm
 from flask import render_template, request, flash, redirect, url_for, abort
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 
 
 @bp.route('/', methods=['GET'])
@@ -40,7 +40,7 @@ def login():
     return render_template('main/login.html', title="Вход", form=form)
 
 
-@bp.route('/logout')
+@bp.route('/auth/logout')
 def logout():
     logout_user()
     return redirect(url_for('main.login'))
