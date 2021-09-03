@@ -17,7 +17,9 @@ class Prod(Resource):
         p,f,ca,co,cu,pr  = prod
         return {'status':'ok',
                 'product':{
+                    'id':{'title':'id','value':p.id},
                     'name':{'title':'Название','value':p.name},
+                    'image_url':{'title':'Изображение','value':p.image_url},
                     'category':{'title':'Категория','value':ca.name},
                     'article':{'title':'Артикул','value':p.article},
                     'factory':{'title':'Фабрика','value':f.name},

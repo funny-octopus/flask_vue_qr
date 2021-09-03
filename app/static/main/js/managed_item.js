@@ -7,8 +7,12 @@ var app = new Vue({
         factories:null,
         categories:null,
         items:null,
+        changes_flag:false,
     },
     methods:{
+        save:function(){
+            console.log(this.product);
+        },
     },
     created(){
         ident = document.getElementById('ident').value;
