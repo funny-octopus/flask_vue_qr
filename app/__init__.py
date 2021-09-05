@@ -32,4 +32,5 @@ def make_shell_contex():
             'Coun':Country,
             'Cur':Currency,
             'Prv':Price_v,
+            'Col':Collection,
              }
