@@ -23,14 +23,14 @@
             <ul class="list-group list-group-flush">
                 <li v-for="(value, name) in resp.product" class="list-group-item d-flex justify-content-between">
                     <strong>[[ value.title ]]</strong>
-                    <select class="w-50 form-select" v-if="select_list.includes(name)" type="text" v-model="resp.product[name].value" @change="changes_flag=true">
+                    <select class="w-50 form-select" v-if="select_list.includes(name)" type="text" v-model="resp.product[name].value" @change="changes_flag=false">
                         <option v-for="val in items.items[name]" >[[ val ]]</option>
                     </select>
-                    <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=true"/>
+                    <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=false"/>
                 </li>
             </ul>
             <div class="text-end mt-3">
-            <button v-show="changes_flag" @click="save()" class="btn btn-primary" type="submit">Сохранить</button>
+            <button :disabled="changes_flag" @click="save()" class="btn btn-primary" type="submit">Сохранить</button>
             </div>
         </div>
     </div>

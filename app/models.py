@@ -84,7 +84,7 @@ class Product(db.Model):
 class Category(db.Model):
     __tablename__ = "category"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True)
+    name = db.Column(db.String(64), index=True, unique=True)
     products = db.relationship('Product', backref='cat', lazy='dynamic')
 
     def __repr__(self):
@@ -94,7 +94,7 @@ class Category(db.Model):
 class Country(db.Model):
     __tablename__ = "country"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True)
+    name = db.Column(db.String(64), index=True, unique=True)
 
     def __repr__(self):
         return f"<Country {self.name}>"
@@ -103,7 +103,7 @@ class Country(db.Model):
 class Currency(db.Model):
     __tablename__ = "currency"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True)
+    name = db.Column(db.String(64), index=True, unique=True)
 
     def __repr__(self):
         return f"<Currency {self.name}>"
@@ -111,7 +111,7 @@ class Currency(db.Model):
 class Price_v(db.Model):
     __tablename__ = "price_v"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True)
+    name = db.Column(db.String(64), index=True, unique=True)
 
     def __repr__(self):
         return f"<Price_v {self.name}>"

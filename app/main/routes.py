@@ -24,11 +24,8 @@ def item(ident):
             .first()
     if current_user.is_authenticated:
         form = ChangeImageForm()
-        print("auth")
         if form.validate_on_submit():
-            print("validate")
             if request.method == "POST":
-                print("POST")
                 upload_file = request.files['filename']
                 if upload_file and\
                ('.' in upload_file.filename) and\
