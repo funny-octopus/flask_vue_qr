@@ -52,13 +52,11 @@ class Prod(Resource):
         prod.percent = resp['percent']['value']
         prod.count = resp['count']['value']
         prod.set_article()
-        print(prod.__dict__)
         try:
             db.session.add(prod)
             db.session.commit()
             return {'status':'ok','article':prod.article}
         except Exception as e:
-            print(str(e))
             db.session.rollback()
             return {'status':'error',}
 
@@ -86,9 +84,9 @@ rest_api.add_resource(Categories, '/api/categories')
 class Collections(Resource):
     def get(self, factory_id):
         factory = Factory.query.get(factory_id)
-        collections = factory.collections
+        collections = factory.collections.all()
         print(collections)
-        return {'items':cs}
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in collections]}
 
 rest_api.add_resource(Collections, '/api/collections/<int:factory_id>')
 
@@ -109,3 +107,4 @@ class Items(Resource):
         return {'status':'ok', 'items':c}
 
 rest_api.add_resource(Items, '/api/items')
+
