@@ -29,8 +29,10 @@
                     <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=false"/>
                 </li>
             </ul>
-            <div class="text-end mt-3">
-            <button :disabled="changes_flag" @click="save()" class="btn btn-primary" type="submit">Сохранить</button>
+            <!-- <div class="text-end mt-3"> -->
+            <div class="d-flex justify-content-between mt-3">
+                <a href="/qr/{{ ident }}" class="btn btn-primary">QR-код</a>
+                <button :disabled="changes_flag" @click="save()" class="btn btn-primary" type="submit">Сохранить</button>
             </div>
         </div>
     </div>

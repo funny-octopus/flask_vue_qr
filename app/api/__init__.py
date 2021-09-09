@@ -104,7 +104,7 @@ class Countries(Resource):
         countries = Country.query.all()
         return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in countries]}
 
-rest_api.add_resource(Products, '/api/products/<int:collection_id>')
+rest_api.add_resource(Countries, '/api/countries/')
 
 
 class Items(Resource):
