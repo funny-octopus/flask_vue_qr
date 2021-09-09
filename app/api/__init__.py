@@ -29,7 +29,7 @@ class Prod(Resource):
                     'price':{'title':'Цена','value':p.price},
                     'price_v':{'title':'Ед.изм','value':pr.name, 'id':pr.id},
                     'currency':{'title':'Ден.ед.','value':cu.name,'id':cu.id},
-                    'percent':{'title':'Процент','value':p.percent},
+                    'percent':{'title':'Наценка','value':p.percent},
                     'count':{'title':'Количество в упаковке','value':p.count}}}
 
     def post(self, product_id):
@@ -60,14 +60,14 @@ class Prod(Resource):
             db.session.rollback()
             return {'status':'error',}
 
-
 rest_api.add_resource(Prod, '/api/item/<int:product_id>')
+
 
 class Factories(Resource):
     def get(self):
         f = Factory.query.all()
-        fs = [x.name for x in f]
-        return {'items':fs}
+        fs = [{'id':x.id, 'name':x.name} for x in f]
+        return {'status':'ok', 'items':fs}
 
 rest_api.add_resource(Factories, '/api/factories')
 
@@ -75,8 +75,8 @@ rest_api.add_resource(Factories, '/api/factories')
 class Categories(Resource):
     def get(self):
         c = Category.query.all()
-        cs = [x.name for x in c]
-        return {'items':cs}
+        cs = [{'id':x.id, 'name':x.name} for x in c]
+        return {'status':'ok', 'items':cs}
 
 rest_api.add_resource(Categories, '/api/categories')
 
@@ -85,10 +85,26 @@ class Collections(Resource):
     def get(self, factory_id):
         factory = Factory.query.get(factory_id)
         collections = factory.collections.all()
-        print(collections)
         return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in collections]}
 
 rest_api.add_resource(Collections, '/api/collections/<int:factory_id>')
+
+
+class Products(Resource):
+    def get(self, collection_id):
+        collection = Collection.query.get(collection_id)
+        products = collection.products.all()
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in products]}
+
+rest_api.add_resource(Products, '/api/products/<int:collection_id>')
+
+
+class Countries(Resource):
+    def get(self):
+        countries = Country.query.all()
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in countries]}
+
+rest_api.add_resource(Products, '/api/products/<int:collection_id>')
 
 
 class Items(Resource):

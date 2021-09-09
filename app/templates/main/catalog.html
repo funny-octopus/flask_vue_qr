@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block custom_head %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock custom_head %}
+
+{% block content %}
+<div id='app' class="container">
+    <div style="height:35px;">
+        <a href="#" class="link-primary" v-show="link_back" @click="change_cur_cat()"><i class="bi bi-arrow-left" style="font-size:1.5rem;"></i></a>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        <div v-for="item in items" >
+            <a v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" href="#" @click="redirect_to_item(item.id)">
+                [[ item.name ]]
+            </a>
+            <a  v-else href="#" class="col m-2 border rounded shadow-sm p-2 text-center d-block" @click="get_items(item.id)">
+                [[ item.name ]]
+            </a>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='main/catalog.js') }}"></script>
+{% endblock content %}

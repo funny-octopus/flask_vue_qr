@@ -4,8 +4,7 @@ from app.main import bp
 from app.models import *
 from app.main.forms import LoginForm, ChangeImageForm, AddProductForm
 from flask import render_template, request, flash, redirect, url_for, abort
-from flask_login import current_user, login_user, logout_user
-from werkzeug.utils import secure_filename
+from flask_login import current_user, login_user, logout_user, login_required
 
 
 @bp.route('/', methods=['GET'])
@@ -44,6 +43,7 @@ def item(ident):
 
 
 @bp.route('/add/', methods=['GET', 'POST'])
+@login_required
 def add_product():
     form = AddProductForm()
     facs = Factory.query.all()
@@ -95,6 +95,12 @@ def add_product():
     return render_template('main/add.html', title="Добавить товар", form=form)
 
 
+@bp.route('/catalog', methods=['GET',])
+@login_required
+def catalog():
+    return render_template('main/catalog.html')
+
+
 @bp.route('/auth/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -105,11 +111,12 @@ def login():
         if user is None or not user.check_password(form.password.data):
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.catalog'))
     return render_template('main/login.html', title="Вход", form=form)
 
 
 @bp.route('/auth/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('main.login'))
