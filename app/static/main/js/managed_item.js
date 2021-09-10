@@ -3,14 +3,13 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         ident:null,
-        select_list:['category', 'factory', 'country', 'currency', 'price_v'],
+        select_list:['category', 'country', 'currency', 'price_v'],
         resp:null,
         items:null,
         changes_flag:true,
     },
     methods:{
         save:function(){
-            console.log(this.resp.product);
             axios({
                 method:'post',
                 url:'/api/item/'+this.ident,
@@ -20,8 +19,6 @@ var app = new Vue({
                 },
             })
             .then(function(response){
-                console.log('ответ получен!');
-                console.log(response.data);
                 if(response.data.status==='ok'){
                     app.resp.product.article.value = response.data.article;
                 };

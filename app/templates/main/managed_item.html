@@ -22,8 +22,12 @@
         <div class="col-12 col-sm-8">
             <ul class="list-group list-group-flush">
                 <li v-for="(value, name) in resp.product" class="list-group-item d-flex justify-content-between">
-                    <strong>[[ value.title ]]</strong>
-                    <select class="w-50 form-select" v-if="select_list.includes(name)" type="text" v-model="resp.product[name].value" @change="changes_flag=false">
+                    <div><strong>[[ value.title ]]</strong><a class="mx-1" v-if="select_list.includes(name)"><i class="bi bi-plus-circle"></i></a></div>
+                    <select class="w-50 form-select"
+                            type="text"
+                             v-if="select_list.includes(name)"
+                             v-model="resp.product[name].value"
+                             @change="changes_flag=false">
                         <option v-for="val in items.items[name]" >[[ val ]]</option>
                     </select>
                     <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=false"/>

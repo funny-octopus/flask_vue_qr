@@ -6,10 +6,9 @@ var application = new Vue({
     },
     methods:{
         get_collections:function(){
-            factory = document.getElementById('factory').value;
-            console.log(factory);
-            axios.get('/api/collections/'+factory)
-               .then(response => this.collections = response.data.items);
+            // factory = document.getElementById('factory').value;
+            // axios.get('/api/collections/'+factory)
+            //    .then(response => this.collections = response.data.items);
         },
     },
 })

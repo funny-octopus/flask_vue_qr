@@ -17,9 +17,10 @@ def index():
 @bp.route('/item/<ident>', methods=['GET', 'POST'])
 def item(ident):
     product = Product.query.get_or_404(ident)
-    items = db.session.query(Product, Factory, Country)\
+    # items = db.session.query(Product, Factory, Country)\
+            # .join(Factory)\
+    items = db.session.query(Product, Country)\
             .filter_by(id=int(ident))\
-            .join(Factory)\
             .join(Country)\
             .first()
     if current_user.is_authenticated:
@@ -38,26 +39,29 @@ def item(ident):
                         db.session.commit()
                     except:
                         db.rollback()
-        return render_template('main/managed_item.html', product=items[0], factory=items[1], ident=ident, form=form)
+        # return render_template('main/managed_item.html', product=items[0], factory=items[1], ident=ident, form=form)
+        return render_template('main/managed_item.html', product=items[0], ident=ident, form=form)
     else:
-        return render_template('main/item.html', product=items[0], factory=items[1], country=items[2])
+        # return render_template('main/item.html', product=items[0], factory=items[1], country=items[2])
+        return render_template('main/item.html', product=items[0], country=items[1])
 
 
 @bp.route('/add/', methods=['GET', 'POST'])
 @login_required
 def add_product():
     form = AddProductForm()
-    facs = Factory.query.all()
+    # facs = Factory.query.all()
     cats = Category.query.all()
     cos = Country.query.all()
     prvs = Price_v.query.all()
     curs = Currency.query.all()
     form.category.choices = [('','')]+[(x.id,x.name) for x in cats]
-    form.factory.choices = [('',''),]+[(x.id,x.name) for x in facs]
+    # form.factory.choices = [('',''),]+[(x.id,x.name) for x in facs]
     form.country.choices = [('','')]+[(x.id,x.name) for x in cos]
     form.price_v.choices = [('','')]+[(x.id,x.name) for x in prvs]
     form.currency.choices = [('','')]+[(x.id,x.name) for x in curs]
-    if request.method == 'POST':
+    # if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
         resp = request.form
         prod = Product(resp['name'],\
                 resp['category'],\

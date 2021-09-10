@@ -8,19 +8,19 @@
 {% block content %}
 <div id='app' class="container">
     <form action='' enctype="multipart/form-data" method="POST" >
-        {# form.csrf_token() #}
+        {{ form.csrf_token() }}
         <ul class="list-group list-group-flush">
             {% for field in form if field.name not in ['csrf_token','submit']%} 
             <li class="list-group-item d-flex justify-content-between">
                 <strong>{{ field.label }}</strong>
-                {% if field.name == 'collection' %}
-                <select id="collection" class="form-control w-50" name="collection">
-                    <option selected></option>
-                    <option v-for="item in collections" :value="item.id">[[ item.name ]]</option>
-                </select>
-                {% else %}
+                {# if field.name == 'collection' #}
+                <!-- <select id="collection" class="form-control w-50" name="collection"> -->
+                <!--     <option selected></option> -->
+                <!--     <option v-for="item in collections" :value="item.id">[[ item.name ]]</option> -->
+                <!-- </select> -->
+                {# else #}
                     {{ field(class_="form-control w-50") }}
-                {% endif %}
+                {# endif #}
             </li>
             {% endfor %}
         </ul>

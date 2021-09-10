@@ -26,11 +26,11 @@ app.register_blueprint(errors_bp)
 def make_shell_contex():
     return {'db':db,
             'User':User,
-            'Fac':Factory,
+            # 'Fac':Factory,
             'Prod':Product,
             'Cat':Category,
             'Coun':Country,
             'Cur':Currency,
             'Prv':Price_v,
-            'Col':Collection,
+            # 'Col':Collection,
              }
