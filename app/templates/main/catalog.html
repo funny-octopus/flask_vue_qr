@@ -12,11 +12,13 @@
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         <div v-for="item in items">
-            <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" key="prod">
-                [[ item.name ]]
+            <!-- <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" key="prod"> -->
+            <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 d-flex justify-content-between align-items-center" key="prod">
+                <img :src="'/static/images/'+item.image_url.replace('big','sm')"/>
+                <span>[[ item.name ]]</span>
             </a>
             <a href="#" v-else class="col m-2 border rounded shadow-sm p-2 text-center d-block" @click="get_items(item.id)" key="cat">
-                [[ item.name ]]
+                <span>[[ item.name ]]</span>
             </a>
         </div>
     </div>

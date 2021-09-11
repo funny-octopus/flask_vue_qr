@@ -3,7 +3,7 @@ import math
 from app import app, db
 from app.main import bp
 from app.models import *
-from app.utils import MakeQR
+from app.utils import MakeQR, save_images
 from app.main.forms import LoginForm, ChangeImageForm, AddProductForm
 from flask import render_template, request, flash, redirect, url_for, abort, send_file
 from flask_login import current_user, login_user, logout_user, login_required
@@ -29,9 +29,6 @@ def item(ident):
     k = k.replace(',', '.')
     price = (float(product.price)*float(k))*((float(product.percent)/100)+1.0)
     price = math.ceil(price)
-    print(price)
-    # items = db.session.query(Product, Factory, Country)\
-            # .join(Factory)\
     items = db.session.query(Product, Country)\
             .filter_by(id=int(ident))\
             .join(Country)\
@@ -46,7 +43,8 @@ def item(ident):
                (upload_file.filename.rsplit('.',1)[1].lower() in app.config['IMAGES_ALLOWED_EXTENSIONS']):
                     filename = f"{ident}.{upload_file.filename.rsplit('.',1)[1]}"
                     upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
-                    product.image_url = filename
+                    save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
+                    product.image_url = 'big_' + filename
                     try:
                         db.session.add(product)
                         db.session.commit()
@@ -100,7 +98,8 @@ def add_product():
        (upload_file.filename.rsplit('.',1)[1].lower() in app.config['IMAGES_ALLOWED_EXTENSIONS']):
             filename = f"{prod.id}.{upload_file.filename.rsplit('.',1)[1]}"
             upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
-            prod.image_url = filename
+            save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
+            prod.image_url = 'big_' + filename
             try:
                 db.session.add(prod)
                 db.session.commit()

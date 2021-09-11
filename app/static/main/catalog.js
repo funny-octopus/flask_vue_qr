@@ -21,7 +21,6 @@ var appp = new Vue({
                 .then(response => this.items = response.data.items);
         },
         redirect_to_item:function(product_id){
-            console.log('сработала функция');
             window.location.replace('/item/' + product_id);
         },
     },

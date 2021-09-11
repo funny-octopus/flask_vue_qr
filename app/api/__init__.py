@@ -100,7 +100,7 @@ class Products(Resource):
     def get(self, category_id):
         category = Category.query.get(category_id)
         products = category.products.all()
-        return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in products]}
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'image_url':x.image_url} for x in products]}
 
 rest_api.add_resource(Products, '/api/products/<int:category_id>')
 

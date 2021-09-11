@@ -4,9 +4,23 @@ import requests
 from datetime import datetime
 # pip install lxml, pillow
 import xlsxwriter
+from PIL import Image
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOMEN = 'http://127.0.0.1:5000'
+
+
+def save_images(abspath:str) -> None:
+    """Принимает путь до файла, и сохраняет его в двух размерах,
+    добавляя префикс в названии"""
+    dirname, filename = os.path.split(abspath)
+    filename_sm = 'sm_' + filename
+    filename_big = 'big_' + filename
+    img = Image.open(abspath)
+    img.thumbnail(size=(300, 256))
+    img.save(os.path.join(dirname, filename_big))
+    img.thumbnail(size=(64, 64))
+    img.save(os.path.join(dirname, filename_sm))
 
 
 def MakeQR(URL:str)->str:
