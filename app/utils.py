@@ -31,7 +31,7 @@ def get_currency()->tuple:
     второй: курс евро --//--
     '''
     url = 'http://www.cbr.ru/scripts/XML_daily.asp?'
-    request = requests.get(url, params)
+    request = requests.get(url)
     soup = bs(request.content, 'xml')
     find_usd = soup.find(ID='R01235').Value.string
     find_eur = soup.find(ID='R01239').Value.string

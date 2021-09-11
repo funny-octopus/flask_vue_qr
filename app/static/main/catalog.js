@@ -3,49 +3,30 @@ var appp = new Vue({
     delimiters:['[[',']]'],
     data:{
         items:null,
-        cur_cat:'factory',
-        f_id:null,
         link_back:false,
+        cur_cat:'category',
 
     },
     methods:{
         get_items:function(id){
-            switch(this.cur_cat){
-                case 'factory':
-                    axios.get('/api/collections/'+id)
-                        .then(response => this.items = response.data.items);
-                    this.cur_cat = 'collection';
-                    this.f_id = id;
-                    this.link_back = true;
-                    break;
-                case 'collection':
-                    this.cur_cat = 'product';
-                    axios.get('/api/products/'+id)
-                        .then(response => this.items = response.data.items);
-                    break;
-            };
+            this.cur_cat = 'product';
+            this.link_back = true;
+            axios.get('/api/products/'+id)
+                    .then(response => this.items = response.data.items);
         },
         change_cur_cat:function(){
-            switch(this.cur_cat){
-                case 'collection':
-                    axios.get('/api/factories')
-                        .then(response => this.items = response.data.items);
-                    this.link_back = false;
-                    this.cur_cat = 'factory';
-                    break;
-                case 'product':
-                    axios.get('/api/collections/'+this.f_id)
-                        .then(response => this.items = response.data.items);
-                    this.cur_cat = 'collection';
-                    break;
-            };
+            this.cur_cat = 'category';
+            this.link_back = false;
+            axios.get('/api/category/')
+                .then(response => this.items = response.data.items);
         },
         redirect_to_item:function(product_id){
+            console.log('сработала функция');
             window.location.replace('/item/' + product_id);
         },
     },
     mounted(){
-        axios.get('/api/factories')
+        axios.get('/api/category/')
             .then(response => this.items = response.data.items);
     },
 

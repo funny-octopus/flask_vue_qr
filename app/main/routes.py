@@ -1,4 +1,5 @@
 import os
+import math
 from app import app, db
 from app.main import bp
 from app.models import *
@@ -17,6 +18,18 @@ def index():
 @bp.route('/item/<ident>', methods=['GET', 'POST'])
 def item(ident):
     product = Product.query.get_or_404(ident)
+    course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
+    cur = Currency.query.filter_by(id=product.price_m).first()
+    if cur.name.lower() == 'доллар':
+        k = course.dollar
+    elif cur.name.lower() == 'евро':
+        k = course.euro
+    else:
+        k = '1'
+    k = k.replace(',', '.')
+    price = (float(product.price)*float(k))*((float(product.percent)/100)+1.0)
+    price = math.ceil(price)
+    print(price)
     # items = db.session.query(Product, Factory, Country)\
             # .join(Factory)\
     items = db.session.query(Product, Country)\
@@ -43,7 +56,7 @@ def item(ident):
         return render_template('main/managed_item.html', product=items[0], ident=ident, form=form)
     else:
         # return render_template('main/item.html', product=items[0], factory=items[1], country=items[2])
-        return render_template('main/item.html', product=items[0], country=items[1])
+        return render_template('main/item.html', product=items[0], country=items[1], price=price)
 
 
 @bp.route('/add/', methods=['GET', 'POST'])

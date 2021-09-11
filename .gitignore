@@ -138,3 +138,4 @@ migrations/
 # images
 images/
 qrs/
+ruble.py

@@ -11,11 +11,11 @@
         <a href="#" class="link-primary" v-show="link_back" @click="change_cur_cat()"><i class="bi bi-arrow-left" style="font-size:1.5rem;"></i></a>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <div v-for="item in items" >
-            <a v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" href="#" @click="redirect_to_item(item.id)">
+        <div v-for="item in items">
+            <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" key="prod">
                 [[ item.name ]]
             </a>
-            <a  v-else href="#" class="col m-2 border rounded shadow-sm p-2 text-center d-block" @click="get_items(item.id)">
+            <a href="#" v-else class="col m-2 border rounded shadow-sm p-2 text-center d-block" @click="get_items(item.id)" key="cat">
                 [[ item.name ]]
             </a>
         </div>

@@ -30,6 +30,7 @@
                              @change="changes_flag=false">
                         <option v-for="val in items.items[name]" >[[ val ]]</option>
                     </select>
+                    <input class="w-50" v-else-if="name === 'article'" type="text" v-model="resp.product[name].value" @change="changes_flag=false" readOnly="true"/>
                     <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=false"/>
                 </li>
             </ul>

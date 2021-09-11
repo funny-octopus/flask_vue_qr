@@ -133,3 +133,17 @@ class Price_v(db.Model):
 
     def __repr__(self):
         return f"<Price_v {self.name}>"
+
+
+class Ruble_course(db.Model):
+    __tablename__ = "ruble_course"
+    id = db.Column(db.Integer, primary_key=True)
+    dollar = db.Column(db.String(16))
+    euro = db.Column(db.String(16))
+    date = db.Column(db.DateTime(timezone=True))
+
+    def __init__(self, dollar, euro, date):
+        self.dollar = dollar
+        self.euro = euro
+        self.date = date
+
