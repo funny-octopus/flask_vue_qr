@@ -81,7 +81,7 @@ rest_api.add_resource(Item, '/api/item/<int:product_id>')
 class Categories(Resource):
     def get(self):
         c = Category.query.all()
-        cs = [{'id':x.id, 'name':x.name} for x in c]
+        cs = [{'id':x.id, 'name':x.name, 'article':'0'} for x in c]
         return {'status':'ok', 'items':cs}
 
 rest_api.add_resource(Categories, '/api/category/')
@@ -99,8 +99,8 @@ rest_api.add_resource(Categories, '/api/category/')
 class Products(Resource):
     def get(self, category_id):
         category = Category.query.get(category_id)
-        products = category.products.all()
-        return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'image_url':x.image_url} for x in products]}
+        products = category.products.order_by(Product.id.desc()).all()
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'image_url':x.image_url, 'article':x.article} for x in products]}
 
 rest_api.add_resource(Products, '/api/products/<int:category_id>')
 

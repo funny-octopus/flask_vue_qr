@@ -118,6 +118,12 @@ def catalog():
     return render_template('main/catalog.html')
 
 
+@bp.route('/search', methods=['GET',])
+@login_required
+def search():
+    return render_template('main/search.html')
+
+
 @bp.route('/auth/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
