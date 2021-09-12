@@ -91,7 +91,9 @@ def add_product():
             print(str(e))
             db.session.rollback()
             abort(500)
+        print(prod.article)
         prod.set_article()
+        print(prod.article)
         upload_file = request.files['image_url']
         if upload_file and\
        ('.' in upload_file.filename) and\
@@ -100,13 +102,13 @@ def add_product():
             upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
             save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
             prod.image_url = 'big_' + filename
-            try:
-                db.session.add(prod)
-                db.session.commit()
-            except Exception as e:
-                print(str(e))
-                db.session.rollback()
-                abort(500)
+        try:
+            db.session.add(prod)
+            db.session.commit()
+        except Exception as e:
+            print(str(e))
+            db.session.rollback()
+            abort(500)
 
         return redirect(url_for('main.add_product'))
     return render_template('main/add.html', title="Добавить товар", form=form)

@@ -6,27 +6,35 @@ var appp = new Vue({
         link_back:false,
         cur_cat:'category',
         filt:'',
+        size:24,
+        page_number:0,
 
-    },
-    watch:{
-        filt:function(newFilt){
-            console.log(newFilt);
-        },
     },
     computed:{
         filtred_items:function(){
             var f = this.filt;
-            console.log('1');
             return this.items.filter(function(elem){
                 if(f==='')return true;
-                else return elem.name.indexOf(f) > -1 || elem.article.indexOf(f) > -1;
+                else return elem.name.toLowerCase().indexOf(f) > -1 || elem.article.toLowerCase().indexOf(f) > -1;
             });
         },
+        page_count:function(){
+            var l = this.filtred_items.length,
+                s = this.size;
+            return Math.ceil(l/s);
+        },
+        paginated_data:function(){
+            const start = this.page_number * this.size,
+                  end = start + this.size;
+            return this.filtred_items.slice(start, end);
+        },
+
     },
     methods:{
         get_items:function(id){
             this.cur_cat = 'product';
             this.link_back = true;
+            this.page_number = 0;
             axios.get('/api/products/'+id)
                     .then(response => this.items = response.data.items);
         },
@@ -39,6 +47,12 @@ var appp = new Vue({
         },
         redirect_to_item:function(product_id){
             window.location.replace('/item/' + product_id);
+        },
+        next_page:function(){
+            this.page_number++;
+        },
+        prev_page:function(){
+            this.page_number--;
         },
     },
     beforeCreate(){

@@ -31,8 +31,8 @@ class Item(Resource):
                     'collection':{'title':'Коллекция','value':p.collection},
                     'name':{'title':'Название','value':p.name},
                     'price':{'title':'Цена','value':p.price},
-                    'price_v':{'title':'Ед.изм','value':pr.name, 'id':pr.id},
                     'currency':{'title':'Ден.ед.','value':cu.name,'id':cu.id},
+                    'price_v':{'title':'Ед.изм','value':pr.name, 'id':pr.id},
                     'percent':{'title':'Наценка(%)','value':p.percent},
                     'count':{'title':'Количество в упаковке','value':p.count}}}
 

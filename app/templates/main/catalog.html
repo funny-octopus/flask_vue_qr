@@ -7,14 +7,14 @@
 
 {% block content %}
 <div id='app' class="container">
-    <div style="height:35px;" v-show="link_back">
+    <div class="row mb-3" v-show="link_back">
         <div class="d-flex justify-content-between">
-            <a href="#" class="link-primary"@click="change_cur_cat()"><i class="bi bi-arrow-left" style="font-size:1.5rem;"></i></a>
+            <a href="#" class="link-primary mx-3"@click="change_cur_cat()"><i class="bi bi-arrow-left" style="font-size:2rem;"></i></a>
             <input type="text" placeholder="Фильтр" v-model="filt">
         </div>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div v-for="item in filtred_items">
+        <div v-for="item in paginated_data">
             <!-- <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" key="prod"> -->
             <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 d-flex justify-content-between align-items-center link-dark text-decoration-none" key="prod" style="height:90px;">
                 <div class="flex-shrink-0">
@@ -27,9 +27,15 @@
             </a>
             <a href="#" v-else class="col m-2 border rounded shadow-sm p-2 d-block link-dark text-decoration-none d-flex align-items-center" @click="get_items(item.id)" key="cat" style="height:90px;">
                 <div class="text-center mx-auto">
-                [[ item.name ]]
+                    <small class="text-muted">[[ item.id ]].</small>[[ item.name ]]
                 </div>
             </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-3 d-flex justify-content-center" v-if="page_count > 1">
+                <button class="btn btn-primary btn-sm mx-3" type="button" @click="prev_page" :disabled="page_number < 1"> Назад </button>
+                <button class="btn btn-primary btn-sm" type="button" @click="next_page" :disabled="page_count === page_number +1">Дальше</button>
         </div>
     </div>
 </div>
