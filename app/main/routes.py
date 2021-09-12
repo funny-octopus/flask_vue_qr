@@ -9,12 +9,6 @@ from flask import render_template, request, flash, redirect, url_for, abort, sen
 from flask_login import current_user, login_user, logout_user, login_required
 
 
-@bp.route('/', methods=['GET'])
-@bp.route('/index', methods=['GET'])
-def index():
-    return render_template('main/index.html')
-
-
 @bp.route('/item/<ident>', methods=['GET', 'POST'])
 def item(ident):
     product = Product.query.get_or_404(ident)
@@ -45,6 +39,7 @@ def item(ident):
                     upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
                     save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
                     product.image_url = 'big_' + filename
+                    product.sm_image_url = 'sm_' + filename
                     try:
                         db.session.add(product)
                         db.session.commit()
@@ -91,9 +86,7 @@ def add_product():
             print(str(e))
             db.session.rollback()
             abort(500)
-        print(prod.article)
         prod.set_article()
-        print(prod.article)
         upload_file = request.files['image_url']
         if upload_file and\
        ('.' in upload_file.filename) and\
@@ -102,6 +95,7 @@ def add_product():
             upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
             save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
             prod.image_url = 'big_' + filename
+            prod.sm_image_url = 'sm_' + filename
         try:
             db.session.add(prod)
             db.session.commit()
@@ -114,16 +108,12 @@ def add_product():
     return render_template('main/add.html', title="Добавить товар", form=form)
 
 
+@bp.route('/', methods=['GET',])
+@bp.route('/index', methods=['GET',])
 @bp.route('/catalog', methods=['GET',])
 @login_required
 def catalog():
     return render_template('main/catalog.html')
-
-
-@bp.route('/search', methods=['GET',])
-@login_required
-def search():
-    return render_template('main/search.html')
 
 
 @bp.route('/auth/login', methods=['GET', 'POST'])

@@ -17,21 +17,15 @@ class ChangeImageForm(FlaskForm):
 
 
 class AddProductForm(FlaskForm):
-
-    # class Meta:
-    #     csrf = False
-
     name = StringField('Название', validators=[DataRequired()])
     category = SelectField('Категория')
     image_url = FileField('Изображение')
-    # factory = SelectField('Фабрика', render_kw={'@change':'get_collections()', 'id':'factory'})
     factory = StringField('Фабрика')
     country = SelectField('Страна')
-    # collection = SelectField('Коллекция', render_kw={'v-model':'collections',})
     collection = StringField('Коллекция')
     price = StringField('Цена', validators=[DataRequired()])
-    price_v = SelectField('Ед.изм.')
     currency = SelectField('Валюта')
+    price_v = SelectField('Ед.изм.')
     percent = StringField('Наценка(%)', validators=[DataRequired()])
     count = StringField('Кол-во в упаковке', validators=[DataRequired()])
     submit = SubmitField('Сохранить')

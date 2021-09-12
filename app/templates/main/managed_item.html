@@ -38,6 +38,7 @@
             <!-- <div class="text-end mt-3"> -->
             <div class="d-flex justify-content-between mt-3">
                 <a href="/qr/{{ ident }}" class="btn btn-primary">QR-код</a>
+                <button type="button" class="btn btn-danger" @click="delete_item">Удалить</button>
                 <button :disabled="changes_flag" @click="save()" class="btn btn-primary" type="submit">Сохранить</button>
             </div>
         </div>

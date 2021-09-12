@@ -48,6 +48,7 @@ class Product(db.Model):
     name = db.Column(db.String(64), index=True)
     category = db.Column(db.Integer, db.ForeignKey('category.id'))
     image_url = db.Column(db.String(64))
+    sm_image_url = db.Column(db.String(64))
     article = db.Column(db.String(64), index=True)
     # factory = db.Column(db.Integer, db.ForeignKey('factory.id'))
     factory = db.Column(db.String(128))
@@ -61,7 +62,8 @@ class Product(db.Model):
     count = db.Column(db.Integer)
 
     def __init__(self, name, category, factory, country, collection,\
-            price, price_v, price_m, percent, count, image_url='default.png'):
+            price, price_v, price_m, percent, count,\
+            image_url='big_default.png', sm_image_url='sm_default.png'):
         self.name = name
         self.category = category
         self.factory = factory
@@ -73,6 +75,7 @@ class Product(db.Model):
         self.percent = percent
         self.count = count
         self.image_url = image_url
+        self.sm_image_url = sm_image_url
 
     def set_article(self)->None:
         "Вычисляет и присваивает внутренний артикул товару"

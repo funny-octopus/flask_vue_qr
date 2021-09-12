@@ -17,16 +17,29 @@ var app = new Vue({
                 headers:{
                     "Content-type":"application/json",
                 },
-            })
-            .then(function(response){
+            }).then(function(response){
                 if(response.data.status==='ok'){
                     app.resp.product.article.value = response.data.article;
                 };
-            })
-            .catch(function(error){
+            }).catch(function(error){
                 console.log(error);
             });
             this.changes_flag=false;
+        },
+        delete_item:function(){
+            var f = confirm('Подтвердите удаление');
+            if(f){
+                axios({
+                    method:'delete',
+                    url:'/api/item/'+this.ident,
+                }).then(function(response){
+                    if(response.data.status ==='ok'){
+                        window.location.replace('/catalog');
+                    }else{
+                        alert('Произошла ошибка при удалении!');
+                    };
+                });
+            };
         },
     },
     created(){

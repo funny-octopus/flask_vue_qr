@@ -6,13 +6,14 @@ var appp = new Vue({
         link_back:false,
         cur_cat:'category',
         filt:'',
-        size:24,
+        // size:24,
+        size:12,
         page_number:0,
 
     },
     computed:{
         filtred_items:function(){
-            var f = this.filt;
+            var f = this.filt.toLowerCase();
             return this.items.filter(function(elem){
                 if(f==='')return true;
                 else return elem.name.toLowerCase().indexOf(f) > -1 || elem.article.toLowerCase().indexOf(f) > -1;
@@ -42,6 +43,7 @@ var appp = new Vue({
             this.cur_cat = 'category';
             this.link_back = false;
             this.filt = '';
+            this.page_number = 0;
             axios.get('/api/category/')
                 .then(response => this.items = response.data.items);
         },
