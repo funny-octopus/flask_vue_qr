@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+
+{% block custom_head %}
+{% include '_vue_script.html' %}
+{% endblock custom_head %}
+
+{% block content %}
+<div id="app" class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <div class="btn-group" role="group" aria-label="Lists">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="category" v-model="option">
+                <label class="btn btn-outline-primary" for="btnradio1">Категории</label>
+            
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="country" v-model="option">
+                <label class="btn btn-outline-primary" for="btnradio2">Страны</label>
+            
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="edizm" v-model="option">
+                <label class="btn btn-outline-primary" for="btnradio3">Ед.изм.</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" v-for="(item, index) in items">
+                    <input type="text" v-model="items[index].name" :key="item.id" >
+                    <a id="rm_btn" class="link-primary align-bottom" href="#" v-if="item.count==='0'" @click="remove(index)">
+                        <i class="bi bi-dash-circle-fill" style="font-size:1.5rem;color:red;"></i>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <input id="add_inp" type="text" placeholder="Добавить" v-model="add_item">
+                    <a id="add_btn" class="link-primary align-bottom" href="#" @click="add">
+                        <i class="bi bi-plus-circle-fill" style="font-size:1.5rem;"></i>
+                    </a>
+                </li>
+            </ul>
+            <button class="btn btn-primary m-3" type="button" @click="save">Сохранить</button>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='main/js/edit.js') }}"></script>
+{% endblock content %}

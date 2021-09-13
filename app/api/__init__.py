@@ -73,8 +73,29 @@ rest_api.add_resource(Item, '/api/item/<int:product_id>')
 class Categories(Resource):
     def get(self):
         c = Category.query.all()
-        cs = [{'id':x.id, 'name':x.name, 'article':'0'} for x in c]
+        cs = [{'id':x.id, 'name':x.name, 'article':'0', 'count':'1'} for x in c]
         return {'status':'ok', 'items':cs}
+    def post(self):
+        resp = request.get_json()
+        cats = Category.query.all()
+        update_list = []
+        for cat in cats:
+            for item in resp:
+                if cat.id == item['id'] and cat.name != item['name']:
+                    cat.name = item['name']
+                    update_list.append(cat)
+        for item in resp:
+            if item['id'] == '0':
+                c = Category(name=item['name'])
+                update_list.append(c)
+        try:
+            db.session.add_all(update_list)
+            db.session.commit()
+        except Exception as e:
+            print(str(e))
+            db.session.rollback()
+            return {'status':'error', 'error':str(e)}
+        return {'status':'ok'}
 
 rest_api.add_resource(Categories, '/api/category/')
 
@@ -92,9 +113,59 @@ rest_api.add_resource(Products, '/api/products/<int:category_id>')
 class Countries(Resource):
     def get(self):
         countries = Country.query.all()
-        return {'status':'ok','items':[{'id':x.id, 'name':x.name} for x in countries]}
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'count':'1'} for x in countries]}
+    def post(self):
+        resp = request.get_json()
+        cous = Country.query.all()
+        update_list = []
+        for cou in cous:
+            for item in resp:
+                if cou.id == item['id'] and cou.name != item['name']:
+                    cou.name = item['name']
+                    update_list.append(cou)
+        for item in resp:
+            if item['id'] == '0':
+                c = Country(name=item['name'])
+                update_list.append(c)
+        try:
+            db.session.add_all(update_list)
+            db.session.commit()
+        except Exception as e:
+            print(str(e))
+            db.session.rollback()
+            return {'status':'error', 'error':str(e)}
+        return {'status':'ok'}
 
 rest_api.add_resource(Countries, '/api/countries/')
+
+
+class Pricevs(Resource):
+    def get(self):
+        pricevs = Price_v.query.all()
+        return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'count':'1'} for x in pricevs]}
+    def post(self):
+        resp = request.get_json()
+        pris = Price_v.query.all()
+        update_list = []
+        for pri in pris:
+            for item in resp:
+                if pri.id == item['id'] and pri.name != item['name']:
+                    pri.name = item['name']
+                    update_list.append(pri)
+        for item in resp:
+            if item['id'] == '0':
+                c = Price_v(name=item['name'])
+                update_list.append(c)
+        try:
+            db.session.add_all(update_list)
+            db.session.commit()
+        except Exception as e:
+            print(str(e))
+            db.session.rollback()
+            return {'status':'error', 'error':str(e)}
+        return {'status':'ok'}
+
+rest_api.add_resource(Pricevs, '/api/pricev/')
 
 
 class Items(Resource):

@@ -46,10 +46,8 @@ def item(ident):
                         db.session.commit()
                     except:
                         db.rollback()
-        # return render_template('main/managed_item.html', product=items[0], factory=items[1], ident=ident, form=form)
         return render_template('main/managed_item.html', product=items[0], ident=ident, form=form)
     else:
-        # return render_template('main/item.html', product=items[0], factory=items[1], country=items[2])
         return render_template('main/item.html', product=items[0], country=items[1], price=price)
 
 
@@ -57,17 +55,14 @@ def item(ident):
 @login_required
 def add_product():
     form = AddProductForm()
-    # facs = Factory.query.all()
     cats = Category.query.all()
     cos = Country.query.all()
     prvs = Price_v.query.all()
     curs = Currency.query.all()
     form.category.choices = [('','')]+[(x.id,x.name) for x in cats]
-    # form.factory.choices = [('',''),]+[(x.id,x.name) for x in facs]
     form.country.choices = [('','')]+[(x.id,x.name) for x in cos]
     form.price_v.choices = [('','')]+[(x.id,x.name) for x in prvs]
     form.currency.choices = [('','')]+[(x.id,x.name) for x in curs]
-    # if request.method == 'POST':
     if request.method == 'POST' and form.validate_on_submit():
         resp = request.form
         prod = Product(resp['name'],\
@@ -143,6 +138,10 @@ def course(r=None):
             flash('Ошибка при добавлении в базу')
     course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
     return render_template('main/course.html', course=course, form=form)
+
+@bp.route('/edit', methods=['GET', 'POST'])
+def edit():
+    return render_template('main/edit.html')
 
 
 @bp.route('/auth/login', methods=['GET', 'POST'])
