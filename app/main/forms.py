@@ -30,3 +30,8 @@ class AddProductForm(FlaskForm):
     count = StringField('Кол-во в упаковке', validators=[DataRequired()])
     submit = SubmitField('Сохранить')
 
+class ChangeCurrency(FlaskForm):
+    dollar = StringField('Доллар')
+    euro = StringField('Евро')
+    submit = SubmitField('Сохранить')
+

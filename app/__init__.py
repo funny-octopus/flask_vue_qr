@@ -36,10 +36,3 @@ def make_shell_contex():
             'Rub':Ruble_course,
              }
 
-from app.utils import get_currency
-from datetime import datetime
-
-tup = get_currency()
-r = Ruble_course(tup[0], tup[1], datetime.now())
-db.session.add(r)
-db.session.commit()

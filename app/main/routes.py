@@ -1,10 +1,11 @@
 import os
 import math
+from datetime import datetime
 from app import app, db
 from app.main import bp
 from app.models import *
-from app.utils import MakeQR, save_images
-from app.main.forms import LoginForm, ChangeImageForm, AddProductForm
+from app.utils import MakeQR, save_images, get_currency
+from app.main.forms import LoginForm, ChangeImageForm, AddProductForm, ChangeCurrency
 from flask import render_template, request, flash, redirect, url_for, abort, send_file
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -114,6 +115,34 @@ def add_product():
 @login_required
 def catalog():
     return render_template('main/catalog.html')
+
+
+@bp.route('/course', methods=['GET', 'POST'])
+@bp.route('/course/<r>', methods=['GET','POST'])
+@login_required
+def course(r=None):
+    if r:
+        dollar, euro = get_currency()
+        c = Ruble_course(dollar, euro, datetime.now())
+        try:
+            db.session.add(c)
+            db.session.commit()
+            return redirect('/course')
+        except Exception as e:
+            db.session.rollback()
+            flash('Ошибка при добавлении в базу')
+    form = ChangeCurrency()
+    if request.method == 'POST' and form.validate_on_submit():
+        c = Ruble_course(form.dollar.data, form.euro.data, datetime.now())
+        try:
+            db.session.add(c)
+            db.session.commit()
+            return redireect('/course')
+        except Exception as e:
+            db.session.rollback()
+            flash('Ошибка при добавлении в базу')
+    course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
+    return render_template('main/course.html', course=course, form=form)
 
 
 @bp.route('/auth/login', methods=['GET', 'POST'])

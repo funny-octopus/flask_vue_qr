@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>
+                <strong>На {{ course.date.strftime("%d.%m.%Y (%H:%M:%S)") }}:</strong>
+                <a class="link-dark" href='/course/r'><i class="bi bi-arrow-repeat" style="font-size:1.5rem"></i></a>
+            </p>
+            <ul class="list-group list-group-flush" style="max-width:200px">
+                    <li class="list-group-item">
+                        1<i class="bi bi-currency-dollar"></i> - {{ course.dollar }} руб.
+                    </li>
+                    <li class="list-group-item">
+                        1<i class="bi bi-currency-euro"></i> - {{ course.euro }} руб.
+                    </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <p><strong>Изменить данные вручную:</strong></p>
+            <form action='' class="" style="max-width:300px;" method='POST'>
+                {{ form.csrf_token() }}
+                    {{ form.dollar(class_="form-control mb-2", placeholder="Доллар") }}
+                    {{ form.euro(class_="form-control mb-2", placeholder="Евро") }}
+                    {{ form.submit(class_="form-control btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
