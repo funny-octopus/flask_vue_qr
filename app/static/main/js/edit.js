@@ -60,7 +60,9 @@ var appp = new Vue({
                 },
             }).then(function(response){
                 if(response.data.status==='ok'){
-                    alert('Успешно сохранено');
+                    alert('Успешно сохранено!');
+                }else(response.data.status==='error'){
+                    alert('Ошибка сохранения!');
                 };
             }).catch(function(error){
                 console.log(error);

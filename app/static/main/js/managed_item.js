@@ -20,6 +20,9 @@ var app = new Vue({
             }).then(function(response){
                 if(response.data.status==='ok'){
                     app.resp.product.article.value = response.data.article;
+                    alert('Изменения сохранены!');
+                }else{
+                    alert('Ошибка сохранения!');
                 };
             }).catch(function(error){
                 console.log(error);
@@ -50,9 +53,4 @@ var app = new Vue({
         axios.get('/api/items')
             .then(response => (this.items = response.data));
     },
-    beforeMount(){
-    },
-    mounted(){
-    },
-
 })
