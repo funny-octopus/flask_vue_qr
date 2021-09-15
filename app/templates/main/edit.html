@@ -25,13 +25,13 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="(item, index) in items">
                     <input type="text" v-model="items[index].name" :key="item.id" >
-                    <a id="rm_btn" class="link-primary align-bottom" href="#" v-if="item.count==='0'" @click="remove(index)">
+                    <a id="" class="link-primary align-bottom rm_btn" href="#" v-if="item.count==='0'" @click="remove(index)">
                         <i class="bi bi-dash-circle-fill" style="font-size:1.5rem;color:red;"></i>
                     </a>
                 </li>
                 <li class="list-group-item">
                     <input id="add_inp" type="text" placeholder="Добавить" v-model="add_item">
-                    <a id="add_btn" class="link-primary align-bottom" href="#" @click="add">
+                    <a id="" class="link-primary align-bottom add_btn" href="#" @click="add">
                         <i class="bi bi-plus-circle-fill" style="font-size:1.5rem;"></i>
                     </a>
                 </li>

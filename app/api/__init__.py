@@ -22,6 +22,7 @@ class Item(Resource):
                     'factory':{'title':'Фабрика','value':p.factory},
                     'country':{'title':'Страна','value':co.name, 'id':co.id},
                     'collection':{'title':'Коллекция','value':p.collection},
+                    'size':{'title':'Размер','value':p.size},
                     'name':{'title':'Название','value':p.name},
                     'price':{'title':'Цена','value':p.price},
                     'currency':{'title':'Ден.ед.','value':cu.name,'id':cu.id},
@@ -41,6 +42,7 @@ class Item(Resource):
         prod.factory = resp['factory']['value']
         prod.country = country_id.id
         prod.collection = resp['collection']['value']
+        prod.size = resp['size']['value']
         prod.price = resp['price']['value']
         prod.price_v = pricev_id.id
         prod.price_m = cur_id.id
@@ -176,7 +178,6 @@ class Items(Resource):
         cur = Currency.query.all()
         pr = Price_v.query.all()
         c = {'category':[x.name for x in cats],
-             # 'factory':[x.name for x in facs],
              'country':[x.name for x in cou],
              'currency':[x.name for x in cur],
              'price_v':[x.name for x in pr],

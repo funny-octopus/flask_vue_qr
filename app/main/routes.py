@@ -70,6 +70,7 @@ def add_product():
                 resp['factory'],\
                 resp['country'],\
                 resp['collection'],\
+                resp['size'],\
                 resp['price'],\
                 resp['price_v'],\
                 resp['currency'],\

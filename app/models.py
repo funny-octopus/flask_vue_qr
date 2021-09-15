@@ -38,6 +38,7 @@ class Product(db.Model):
     factory = db.Column(db.String(128))
     country = db.Column(db.Integer, db.ForeignKey('country.id'))
     collection = db.Column(db.String(128))
+    size = db.Column(db.String(64))
     price = db.Column(db.Integer)
     price_v = db.Column(db.Integer, db.ForeignKey('price_v.id'))
     price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
@@ -45,13 +46,14 @@ class Product(db.Model):
     count = db.Column(db.Integer)
 
     def __init__(self, name, category, factory, country, collection,\
-            price, price_v, price_m, percent, count,\
+            size ,price, price_v, price_m, percent, count,\
             image_url='big_default.png', sm_image_url='sm_default.png'):
         self.name = name
         self.category = category
         self.factory = factory
         self.country = country
         self.collection = collection
+        self.size = size
         self.price = price
         self.price_v = price_v
         self.price_m = price_m

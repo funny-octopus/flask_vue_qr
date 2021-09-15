@@ -20,9 +20,10 @@ class AddProductForm(FlaskForm):
     name = StringField('Название', validators=[DataRequired()])
     category = SelectField('Категория')
     image_url = FileField('Изображение')
-    factory = StringField('Фабрика')
+    factory = StringField('Фабрика', validators=[DataRequired()])
     country = SelectField('Страна')
-    collection = StringField('Коллекция')
+    collection = StringField('Коллекция', validators=[DataRequired()])
+    size = StringField('Размер', validators=[DataRequired()])
     price = StringField('Цена', validators=[DataRequired()])
     currency = SelectField('Валюта')
     price_v = SelectField('Ед.изм.')
@@ -31,7 +32,7 @@ class AddProductForm(FlaskForm):
     submit = SubmitField('Сохранить')
 
 class ChangeCurrency(FlaskForm):
-    dollar = StringField('Доллар')
-    euro = StringField('Евро')
+    dollar = StringField('Доллар', validators=[DataRequired()])
+    euro = StringField('Евро', validators=[DataRequired()])
     submit = SubmitField('Сохранить')
 

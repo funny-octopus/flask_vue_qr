@@ -50,7 +50,6 @@ var appp = new Vue({
                     urll = '/api/pricev/';
                     break;
             };
-            console.log(urll);
             axios({
                 method:'post',
                 url:urll,
@@ -60,8 +59,13 @@ var appp = new Vue({
                 },
             }).then(function(response){
                 if(response.data.status==='ok'){
+                    appp.items = appp.items.map(function(item){
+                        item['count'] = '1';
+                        return item;
+                    });
                     alert('Успешно сохранено!');
-                }else(response.data.status==='error'){
+                };
+                if(response.data.status==='error'){
                     alert('Ошибка сохранения!');
                 };
             }).catch(function(error){
