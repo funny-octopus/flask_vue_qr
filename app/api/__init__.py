@@ -2,9 +2,11 @@ from app import db, rest_api
 from app.models import *
 from flask_restful import Resource
 from flask import request
+from flask_login import login_required
 
 
 class Item(Resource):
+    @login_required
     def get(self, product_id):
         prod = db.session.query(Product, Category, Country, Currency, Price_v)\
                 .filter_by(id=int(product_id))\
@@ -30,6 +32,7 @@ class Item(Resource):
                     'percent':{'title':'Наценка(%)','value':p.percent},
                     'count':{'title':'Количество в упаковке','value':p.count}}}
 
+    @login_required
     def post(self, product_id):
         resp = request.get_json()
         cat_id = Category.query.filter_by(name=resp['category']['value']).first()
@@ -54,9 +57,11 @@ class Item(Resource):
             db.session.commit()
             return {'status':'ok','article':prod.article}
         except Exception as e:
+            print(str(e))
             db.session.rollback()
             return {'status':'error',}
 
+    @login_required
     def delete(self, product_id):
         prod = Product.query.get_or_404(product_id)
         try:
@@ -68,15 +73,16 @@ class Item(Resource):
             db.session.rollback()
             return {'status':'error',}
 
-
 rest_api.add_resource(Item, '/api/item/<int:product_id>')
 
 
 class Categories(Resource):
+    @login_required
     def get(self):
         c = Category.query.all()
         cs = [{'id':x.id, 'name':x.name, 'article':'0', 'count':'1'} for x in c]
         return {'status':'ok', 'items':cs}
+    @login_required
     def post(self):
         resp = request.get_json()
         cats = Category.query.all()
@@ -103,6 +109,7 @@ rest_api.add_resource(Categories, '/api/category/')
 
 
 class Products(Resource):
+    @login_required
     def get(self, category_id):
         category = Category.query.get(category_id)
         products = category.products.order_by(Product.id.desc()).all()
@@ -113,9 +120,11 @@ rest_api.add_resource(Products, '/api/products/<int:category_id>')
 
 
 class Countries(Resource):
+    @login_required
     def get(self):
         countries = Country.query.all()
         return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'count':'1'} for x in countries]}
+    @login_required
     def post(self):
         resp = request.get_json()
         cous = Country.query.all()
@@ -142,9 +151,11 @@ rest_api.add_resource(Countries, '/api/countries/')
 
 
 class Pricevs(Resource):
+    @login_required
     def get(self):
         pricevs = Price_v.query.all()
         return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'count':'1'} for x in pricevs]}
+    @login_required
     def post(self):
         resp = request.get_json()
         pris = Price_v.query.all()
@@ -171,6 +182,7 @@ rest_api.add_resource(Pricevs, '/api/pricev/')
 
 
 class Items(Resource):
+    @login_required
     def get(self):
         cats = Category.query.all()
         # facs = Factory.query.all()
