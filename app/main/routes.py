@@ -148,7 +148,7 @@ def edit():
 @bp.route('/auth/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.catalog'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(name=form.username.data).first()
