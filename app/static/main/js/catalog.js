@@ -7,7 +7,7 @@ var appp = new Vue({
         cur_cat:'category',
         filt:'',
         // size:24,
-        size:12,
+        size:6,
         page_number:0,
 
     },
@@ -33,6 +33,7 @@ var appp = new Vue({
     },
     methods:{
         get_items:function(id){
+            this.items=[];
             this.cur_cat = 'product';
             this.link_back = true;
             this.page_number = 0;

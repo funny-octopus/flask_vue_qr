@@ -126,7 +126,7 @@ def course(r=None):
             return redirect('/course')
         except Exception as e:
             db.session.rollback()
-            flash('Ошибка при добавлении в базу')
+            # flash('Ошибка при добавлении в базу')
     form = ChangeCurrency()
     if request.method == 'POST' and form.validate_on_submit():
         c = Ruble_course(form.dollar.data, form.euro.data, datetime.now())
@@ -136,7 +136,7 @@ def course(r=None):
             return redireect('/course')
         except Exception as e:
             db.session.rollback()
-            flash('Ошибка при добавлении в базу')
+            # flash('Ошибка при добавлении в базу')
     course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
     return render_template('main/course.html', course=course, form=form)
 
@@ -153,7 +153,8 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(name=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('login'))
+            flash('Неправильное имя пользователя или пароль')
+            return redirect(url_for('main.login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('main.catalog'))
     return render_template('main/login.html', title="Вход", form=form)
