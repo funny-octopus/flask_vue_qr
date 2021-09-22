@@ -13,6 +13,7 @@ var appp = new Vue({
     },
     computed:{
         filtred_items:function(){
+            this.page_number = 0;
             var f = this.filt.toLowerCase();
             return this.items.filter(function(elem){
                 if(f==='')return true;
