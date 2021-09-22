@@ -5,7 +5,7 @@ from app import app, db
 from app.main import bp
 from app.models import *
 from app.utils import MakeQR, save_images, get_currency
-from app.main.forms import LoginForm, ChangeImageForm, AddProductForm, ChangeCurrency
+from app.main.forms import LoginForm, ChangeImageForm, AddProductForm, ChangeCurrency, ChangePasswordForm
 from flask import render_template, request, flash, redirect, url_for, abort, send_file
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -172,4 +172,15 @@ def logout():
 def qr(ident):
     filename = MakeQR(f"http://127.0.0.1:5000/item/{ident}")
     return send_file(filename, as_attachment=True, download_name=f"{ident}.png")
+
+
+@bp.route('/password', methods=['GET','POST'])
+@login_required
+def password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        current_user.set_password(form.password.data)
+        db.session.commit()
+        flash("Пароль успешно изменен!")
+    return render_template('main/password.html', title="Изменение пароля", form=form)
 

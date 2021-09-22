@@ -36,3 +36,8 @@ class ChangeCurrency(FlaskForm):
     euro = StringField('Евро', validators=[DataRequired()])
     submit = SubmitField('Сохранить')
 
+
+class ChangePasswordForm(FlaskForm):
+    password = StringField('New Password', validators=[DataRequired()])
+    submit = SubmitField('Изменить')
+
