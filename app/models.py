@@ -39,11 +39,11 @@ class Product(db.Model):
     country = db.Column(db.Integer, db.ForeignKey('country.id'))
     collection = db.Column(db.String(128))
     size = db.Column(db.String(64))
-    price = db.Column(db.Integer)
+    price = db.Column(db.String(16))
     price_v = db.Column(db.Integer, db.ForeignKey('price_v.id'))
     price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
-    percent = db.Column(db.Integer) # процент накрутки
-    count = db.Column(db.Integer)
+    percent = db.Column(db.String(16)) # процент накрутки
+    count = db.Column(db.String(16))
 
     def __init__(self, name, category, factory, country, collection,\
             size ,price, price_v, price_m, percent, count,\

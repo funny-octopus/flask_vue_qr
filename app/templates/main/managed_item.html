@@ -10,7 +10,7 @@
     <input id="ident" type="text" value="{{ ident }}" hidden/>
     <div class="row">
         <div class="col-12 col-sm-4">
-            <img class="rounded img-thumbnail w-100" src="{{ url_for('static',filename='images/'+product.image_url) }}" alt="Изображение товара" />
+            <img class="rounded img-thumbnail mx-auto d-block" src="{{ url_for('static',filename='images/'+product.image_url) }}" alt="Изображение товара" />
             <form action="" class="my-3" enctype="multipart/form-data" method="POST">
                 <div class="input-group input-group-sm">
                     {{ form.csrf_token() }}
