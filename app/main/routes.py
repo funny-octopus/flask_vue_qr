@@ -170,7 +170,8 @@ def logout():
 @bp.route('/qr/<ident>', methods=['GET',])
 @login_required
 def qr(ident):
-    filename = MakeQR(f"http://127.0.0.1:5000/item/{ident}")
+    # filename = MakeQR(f"http://127.0.0.1:5000/item/{ident}")
+    filename = MakeQR(f"https://{app.config['DOMAIN']}/item/{ident}")
     return send_file(filename, as_attachment=True, download_name=f"{ident}.png")
 
 

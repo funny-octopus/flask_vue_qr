@@ -6,8 +6,7 @@ var appp = new Vue({
         link_back:false,
         cur_cat:'category',
         filt:'',
-        // size:24,
-        size:6,
+        size:24,
         page_number:0,
 
     },
