@@ -71,10 +71,10 @@ def add_product():
                 resp['country'],\
                 resp['collection'],\
                 resp['size'],\
-                resp['price'].replace(',','.'),\
+                resp['price'].replace(',','.').replace(' ','').strip(),\
                 resp['price_v'],\
                 resp['currency'],\
-                resp['percent'].replace(',','.'),\
+                resp['percent'].replace(',','.').replace(' ','').strip(),\
                 resp['count'])
         try:
             db.session.add(prod)
