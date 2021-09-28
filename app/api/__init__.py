@@ -112,8 +112,14 @@ class Products(Resource):
     @login_required
     def get(self, category_id):
         category = Category.query.get(category_id)
-        products = category.products.order_by(Product.id.desc()).all()
-        p = [{'id':x.id, 'name':x.name, 'image_url':x.image_url, 'sm_image_url':x.sm_image_url, 'article':x.article} for x in products]
+        products = category.products.order_by(Product.name).all()
+        p = [{'id':x.id,\
+                'name':x.name,\
+                'image_url':x.image_url,\
+                'sm_image_url':x.sm_image_url,\
+                'article':x.article,\
+                'factory':x.factory,\
+                'collection':x.collection} for x in products]
         return {'status':'ok','items':p}
 
 rest_api.add_resource(Products, '/api/products/<int:category_id>')
@@ -122,7 +128,7 @@ rest_api.add_resource(Products, '/api/products/<int:category_id>')
 class Countries(Resource):
     @login_required
     def get(self):
-        countries = Country.query.all()
+        countries = Country.query.order_by(Country.name).all()
         return {'status':'ok','items':[{'id':x.id, 'name':x.name, 'count':'1'} for x in countries]}
     @login_required
     def post(self):
