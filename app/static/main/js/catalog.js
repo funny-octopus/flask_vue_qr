@@ -65,7 +65,7 @@ var appp = new Vue({
                 var ff = fff.map(item => item.factory);
                 var f = ff.filter((v, i, a) => a.indexOf(v) === i);
             };
-            return ff.sort()
+            return f.sort()
         },
         collections:function(){
             var f = this.factory;
