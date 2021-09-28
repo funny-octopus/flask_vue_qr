@@ -56,8 +56,8 @@ var appp = new Vue({
         factories:function(){
             var c = this.collection;
             if(c === 'all'){
-                var f = this.items.map(item => item.factory);
-                var ff = f.filter((v, i, a) => a.indexOf(v) === i);
+                var ff = this.items.map(item => item.factory);
+                var f = ff.filter((v, i, a) => a.indexOf(v) === i);
             }else{ 
                 var fff = this.items.filter(function(item){
                     return item.collection === c; 

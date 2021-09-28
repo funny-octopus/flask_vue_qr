@@ -13,20 +13,22 @@
         </div>
     </div>
     <div class="row mb-3" v-show="link_back">
-        <div class="d-flex justify-content-between">
-            <div>
-                <span>Фабрика:</span>
-                <select v-model="factory" class="form-select form-select-sm">
-                    <option value="all">Все</option>
-                    <option v-for="f in factories">[[ f ]]</option>
-                </select>
-            </div>
-            <div>
-                <span>Коллекция:</span>
-                <select v-model="collection" class="form-select form-select-sm">
-                    <option value="all">Все</option>
-                    <option v-for="c in collections">[[ c ]]</option>
-                </select>
+        <div class="col">
+            <div class="d-flex justify-content-start">
+                <div class="mx-2">
+                    <span>Фабрика:</span>
+                    <select v-model="factory" class="form-select form-select-sm">
+                        <option value="all">Все</option>
+                        <option v-for="f in factories">[[ f ]]</option>
+                    </select>
+                </div>
+                <div class="mx-2">
+                    <span>Коллекция:</span>
+                    <select v-model="collection" class="form-select form-select-sm">
+                        <option value="all">Все</option>
+                        <option v-for="c in collections">[[ c ]]</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
