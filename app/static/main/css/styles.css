@@ -24,6 +24,7 @@ main{
     width: 100%;
     }
 }
+
 .sidebar .active {
     border-radius: 5px;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -37,6 +38,11 @@ main{
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
+
 .minw {
     min-width:20px;
+}
+
+[v-cloak]{
+    display:none;
 }

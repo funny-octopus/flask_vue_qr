@@ -46,11 +46,11 @@ class Item(Resource):
         prod.country = country_id.id
         prod.collection = resp['collection']['value']
         prod.size = resp['size']['value']
-        prod.price = resp['price']['value']
+        prod.price = resp['price']['value'].strip().replace(' ', '').replace(',','.')
         prod.price_v = pricev_id.id
         prod.price_m = cur_id.id
-        prod.percent = resp['percent']['value']
-        prod.count = resp['count']['value']
+        prod.percent = resp['percent']['value'].strip().replace(' ', '').replace(',','.')
+        prod.count = resp['count']['value'].strip().replace(' ', '').replace(',','.')
         prod.set_article()
         try:
             db.session.add(prod)
