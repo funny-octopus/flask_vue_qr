@@ -1,12 +1,12 @@
 import os
 import math
 from datetime import datetime
-from app import app, db
+from app import db
 from app.main import bp
 from app.models import *
 from app.utils import MakeQR, save_images, get_currency
 from app.main.forms import LoginForm, ChangeImageForm, AddProductForm, ChangeCurrency, ChangePasswordForm
-from flask import render_template, request, flash, redirect, url_for, abort, send_file
+from flask import render_template, request, flash, redirect, url_for, abort, send_file, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 
 
@@ -35,10 +35,10 @@ def item(ident):
                 upload_file = request.files['filename']
                 if upload_file and\
                ('.' in upload_file.filename) and\
-               (upload_file.filename.rsplit('.',1)[1].lower() in app.config['IMAGES_ALLOWED_EXTENSIONS']):
+               (upload_file.filename.rsplit('.',1)[1].lower() in current_app.config['IMAGES_ALLOWED_EXTENSIONS']):
                     filename = f"{ident}.{upload_file.filename.rsplit('.',1)[1]}"
-                    upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
-                    save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
+                    upload_file.save(os.path.join(current_app.config['IMAGES_UPLOAD_FOLDER'], filename))
+                    save_images(os.path.join(current_app.config['IMAGES_UPLOAD_FOLDER'], filename))
                     product.image_url = 'big_' + filename
                     product.sm_image_url = 'sm_' + filename
                     try:
@@ -87,10 +87,10 @@ def add_product():
         upload_file = request.files['image_url']
         if upload_file and\
        ('.' in upload_file.filename) and\
-       (upload_file.filename.rsplit('.',1)[1].lower() in app.config['IMAGES_ALLOWED_EXTENSIONS']):
+       (upload_file.filename.rsplit('.',1)[1].lower() in current_app.config['IMAGES_ALLOWED_EXTENSIONS']):
             filename = f"{prod.id}.{upload_file.filename.rsplit('.',1)[1]}"
-            upload_file.save(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
-            save_images(os.path.join(app.config['IMAGES_UPLOAD_FOLDER'], filename))
+            upload_file.save(os.path.join(current_app.config['IMAGES_UPLOAD_FOLDER'], filename))
+            save_images(os.path.join(current_app.config['IMAGES_UPLOAD_FOLDER'], filename))
             prod.image_url = 'big_' + filename
             prod.sm_image_url = 'sm_' + filename
         try:
@@ -171,7 +171,7 @@ def logout():
 @login_required
 def qr(ident):
     # filename = MakeQR(f"http://127.0.0.1:5000/item/{ident}")
-    filename = MakeQR(f"https://{app.config['DOMAIN']}/item/{ident}")
+    filename = MakeQR(f"https://{current_app.config['DOMAIN']}/item/{ident}")
     return send_file(filename, as_attachment=True, download_name=f"{ident}.png")
 
 
