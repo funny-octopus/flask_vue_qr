@@ -95,10 +95,13 @@ var appp = new Vue({
 
         },
         change_cur_cat:function(){
+            this.items=[];
             this.cur_cat = 'category';
             this.link_back = false;
             this.filt = '';
             this.page_number = 0;
+            this.factory = 'all';
+            this.collection = 'all';
             axios.get('/api/category/')
                 .then(response => this.items = response.data.items);
         },

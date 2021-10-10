@@ -5,7 +5,7 @@
 {% endblock custom_head %}
 
 {% block content %}
-<div id='app' class="container">
+<div id='app' class="container" v-cloak>
     <div class="row mb-3" v-show="link_back">
         <div class="d-flex justify-content-between">
             <a href="#" class="link-primary mx-3"@click="change_cur_cat()"><i class="bi bi-arrow-left" style="font-size:2rem;"></i></a>
@@ -17,14 +17,14 @@
             <div class="d-flex justify-content-start">
                 <div class="mx-2">
                     <span>Фабрика:</span>
-                    <select v-model="factory" class="form-select form-select-sm">
+                    <select v-model="factory" @change="page_number=0" class="form-select form-select-sm">
                         <option value="all">Все</option>
                         <option v-for="f in factories">[[ f ]]</option>
                     </select>
                 </div>
                 <div class="mx-2">
                     <span>Коллекция:</span>
-                    <select v-model="collection" class="form-select form-select-sm">
+                    <select v-model="collection" @change="page_number=0" class="form-select form-select-sm">
                         <option value="all">Все</option>
                         <option v-for="c in collections">[[ c ]]</option>
                     </select>
