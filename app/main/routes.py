@@ -24,9 +24,10 @@ def item(ident):
     k = k.replace(',', '.')
     price = (float(product.price)*float(k))*((float(product.percent)/100)+1.0)
     price = math.ceil(price)
-    items = db.session.query(Product, Country)\
+    items = db.session.query(Product, Country, Price_v)\
             .filter_by(id=int(ident))\
             .join(Country)\
+            .join(Price_v)\
             .first()
     if current_user.is_authenticated:
         form = ChangeImageForm()
@@ -48,7 +49,7 @@ def item(ident):
                         db.rollback()
         return render_template('main/managed_item.html', product=items[0], ident=ident, form=form)
     else:
-        return render_template('main/item.html', product=items[0], country=items[1], price=price)
+        return render_template('main/item.html', product=items[0], country=items[1], price=price, price_v=items[2])
 
 
 @bp.route('/add/', methods=['GET', 'POST'])

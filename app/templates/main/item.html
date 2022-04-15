@@ -26,14 +26,16 @@
                     <span>{{product.size}}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span><strong>Цена:</strong></span>
-                    <span class="h4"><strong>{{price}} руб.</strong></span>
+                    <span><strong>Цена:</strong>*</span>
+		    <span class="h4"><strong>{{price}} руб.</strong> /{{price_v.name}}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <span><strong>Количество в упаковке:</strong></span>
                     <span>{{product.count}}</span>
                 </li>
             </ul>
+	    <hr/>
+	    <span><small class="text-muted">*В связи с неустойчивым курсом, цены могут отображаться некорректно. Уточняйте цену у менеджеров.<br/>Спасибо за понимание!<br/>** Оттенок цвета на образце может отличаться от фактического.</small></span>
         </div>
     </div>
 <div>
