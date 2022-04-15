@@ -31,7 +31,7 @@ class Item(Resource):
                     'price_v':{'title':'Ед.изм','value':pr.name, 'id':pr.id},
                     'percent':{'title':'Наценка(%)','value':p.percent},
                     'count':{'title':'Количество в упаковке','value':p.count},
-                    'notes':{'title':'Заметки','value':p.notes}
+                    'notes':{'title':'Примечания','value':p.notes}
                     }
                 }
 
