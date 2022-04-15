@@ -21,6 +21,7 @@ class Item(Resource):
                     'category':{'title':'Категория','value':ca.name, 'id':ca.id},
                     'article':{'title':'Артикул','value':p.article},
                     'factory':{'title':'Фабрика','value':p.factory},
+                    'provider':{'title':'Поставщик','value':p.provider},
                     'country':{'title':'Страна','value':co.name, 'id':co.id},
                     'collection':{'title':'Коллекция','value':p.collection},
                     'size':{'title':'Размер','value':p.size},
@@ -29,7 +30,10 @@ class Item(Resource):
                     'currency':{'title':'Ден.ед.','value':cu.name,'id':cu.id},
                     'price_v':{'title':'Ед.изм','value':pr.name, 'id':pr.id},
                     'percent':{'title':'Наценка(%)','value':p.percent},
-                    'count':{'title':'Количество в упаковке','value':p.count}}}
+                    'count':{'title':'Количество в упаковке','value':p.count},
+                    'notes':{'title':'Заметки','value':p.notes}
+                    }
+                }
 
     @login_required
     def post(self, product_id):
@@ -42,6 +46,7 @@ class Item(Resource):
         prod.name = resp['name']['value']
         prod.category = cat_id.id
         prod.factory = resp['factory']['value']
+        prod.provider = resp['provider']['value']
         prod.country = country_id.id
         prod.collection = resp['collection']['value']
         prod.size = resp['size']['value']
@@ -50,6 +55,7 @@ class Item(Resource):
         prod.price_m = cur_id.id
         prod.percent = resp['percent']['value'].strip().replace(' ', '').replace(',','.')
         prod.count = resp['count']['value'].strip().replace(' ', '').replace(',','.')
+        prod.notes = resp['notes']['value']
         prod.set_article()
         try:
             db.session.add(prod)

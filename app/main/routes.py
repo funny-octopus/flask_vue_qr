@@ -68,6 +68,7 @@ def add_product():
         prod = Product(resp['name'],\
                 resp['category'],\
                 resp['factory'],\
+                resp['provider'],\
                 resp['country'],\
                 resp['collection'],\
                 resp['size'],\
@@ -75,7 +76,8 @@ def add_product():
                 resp['price_v'],\
                 resp['currency'],\
                 resp['percent'].replace(',','.').replace(' ','').strip(),\
-                resp['count'])
+                resp['count'],\
+                resp['notes'])
         try:
             db.session.add(prod)
             db.session.commit()

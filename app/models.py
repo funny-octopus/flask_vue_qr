@@ -36,6 +36,7 @@ class Product(db.Model):
     sm_image_url = db.Column(db.String(64))
     article = db.Column(db.String(64), index=True)
     factory = db.Column(db.String(128))
+    provider = db.Column(db.String(128))
     country = db.Column(db.Integer, db.ForeignKey('country.id'))
     collection = db.Column(db.String(128))
     size = db.Column(db.String(64))
@@ -44,13 +45,15 @@ class Product(db.Model):
     price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
     percent = db.Column(db.String(16)) # процент накрутки
     count = db.Column(db.String(16))
+    notes = db.Column(db.Text)
 
-    def __init__(self, name, category, factory, country, collection,\
-            size ,price, price_v, price_m, percent, count,\
+    def __init__(self, name, category, factory, provider, country, collection,\
+            size ,price, price_v, price_m, percent, count, notes='',\
             image_url='big_default.png', sm_image_url='sm_default.png'):
         self.name = name
         self.category = category
         self.factory = factory
+        self.provider = provider
         self.country = country
         self.collection = collection
         self.size = size
@@ -59,6 +62,7 @@ class Product(db.Model):
         self.price_m = price_m
         self.percent = percent
         self.count = count
+        self.notes = notes
         self.image_url = image_url
         self.sm_image_url = sm_image_url
 

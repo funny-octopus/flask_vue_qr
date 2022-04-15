@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
+from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired
 
 
@@ -21,6 +22,7 @@ class AddProductForm(FlaskForm):
     category = SelectField('Категория')
     image_url = FileField('Изображение')
     factory = StringField('Фабрика', validators=[DataRequired()])
+    provider = StringField('Поставщик', validators=[DataRequired()])
     country = SelectField('Страна')
     collection = StringField('Коллекция', validators=[DataRequired()])
     size = StringField('Размер', validators=[DataRequired()])
@@ -29,6 +31,7 @@ class AddProductForm(FlaskForm):
     price_v = SelectField('Ед.изм.')
     percent = StringField('Наценка(%)', validators=[DataRequired()])
     count = StringField('Кол-во в упаковке', validators=[DataRequired()])
+    notes = StringField('Примечания', widget=TextArea())
     submit = SubmitField('Сохранить')
 
 class ChangeCurrency(FlaskForm):
