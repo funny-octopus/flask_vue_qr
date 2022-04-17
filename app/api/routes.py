@@ -1,6 +1,6 @@
 from flask import request
 from flask_login import login_required
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from app import db
 from app.models import *
 
@@ -110,16 +110,48 @@ class Categories(Resource):
 class Products(Resource):
     @login_required
     def get(self, category_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('factory')
+        parser.add_argument('collection')
+        parser.add_argument('provider')
+        args = parser.parse_args()
         category = Category.query.get(category_id)
-        products = category.products.order_by(Product.name).all()
-        p = [{'id':x.id,\
+        # products = category.products.order_by(Product.name).all()
+        products = category.products
+        if args.get('factory'):
+            products = category.products.filter_by(factory=args.get('factory'))
+        if args.get('collection'):
+            products = category.products.filter_by(collection=args.get('collection'))
+        if args.get('provider'):
+            products = category.products.filter_by(provider=args.get('provider'))
+        products = products.order_by(Product.name).all()
+        pr = [{'id':x.id,\
                 'name':x.name,\
                 'image_url':x.image_url,\
                 'sm_image_url':x.sm_image_url,\
                 'article':x.article,\
                 'factory':x.factory,\
                 'collection':x.collection} for x in products]
-        return {'status':'ok','items':p}
+
+        category = Category.query.get(category_id)
+        items = category.products
+        if args.get('collection'): items = items.filter_by(collection=args.get('collection'))
+        if args.get('provider'): items = items.filter_by(provider=args.get('provider'))
+        f = [x.factory for x in items.all()]
+
+        category = Category.query.get(category_id)
+        items = category.products
+        if args.get('factory'): items = items.filter_by(factory=args.get('factory'))
+        if args.get('provider'): items = items.filter_by(provider=args.get('provider'))
+        c = [x.collection for x in items.all()]
+
+        category = Category.query.get(category_id)
+        items = category.products
+        if args.get('collection'): items = items.filter_by(collection=args.get('collection'))
+        if args.get('factory'): items = items.filter_by(factory=args.get('factory'))
+        p = [x.provider for x in items.all()]
+
+        return {'status':'ok','items':pr, 'factories':f, 'collections':c, 'providers':p}
 
 
 class Countries(Resource):

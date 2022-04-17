@@ -17,18 +17,25 @@
             <div class="d-flex justify-content-start">
                 <div class="mx-2">
                     <span>Фабрика:</span>
-                    <select v-model="factory" @change="page_number=0" class="form-select form-select-sm">
+                    <select v-model="factory" @change="get_items()" class="form-select form-select-sm">
                         <option value="all">Все</option>
                         <option v-for="f in factories">[[ f ]]</option>
                     </select>
                 </div>
                 <div class="mx-2">
                     <span>Коллекция:</span>
-                    <select v-model="collection" @change="page_number=0" class="form-select form-select-sm">
+                    <select v-model="collection" @change="get_items()" class="form-select form-select-sm">
                         <option value="all">Все</option>
                         <option v-for="c in collections">[[ c ]]</option>
                     </select>
                 </div>
+                <div class="mx-2">
+                    <span>Поставщик:</span>
+                    <select v-model="provider" @change="get_items()" class="form-select form-select-sm">
+                        <option value="all">Все</option>
+                        <option v-for="p in providers">[[ p ]]</option>
+                    </select>
+		</div>
             </div>
         </div>
     </div>
