@@ -119,10 +119,18 @@ class Ruble_course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dollar = db.Column(db.String(16))
     euro = db.Column(db.String(16))
+    dollar1 = db.Column(db.String(16))
+    euro1 = db.Column(db.String(16))
+    dollar2 = db.Column(db.String(16))
+    euro2 = db.Column(db.String(16))
     date = db.Column(db.DateTime(timezone=True))
 
-    def __init__(self, dollar, euro, date):
+    def __init__(self, dollar, euro, dollar1, euro1, dollar2, euro2, date):
         self.dollar = dollar
         self.euro = euro
+        self.dollar1 = dollar1
+        self.euro1 = euro1
+        self.dollar2 = dollar2
+        self.euro2 = euro2
         self.date = date
 

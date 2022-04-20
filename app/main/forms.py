@@ -35,8 +35,12 @@ class AddProductForm(FlaskForm):
     submit = SubmitField('Сохранить')
 
 class ChangeCurrency(FlaskForm):
-    dollar = StringField('Доллар', validators=[DataRequired()])
-    euro = StringField('Евро', validators=[DataRequired()])
+    dollar = StringField('Доллар')
+    euro = StringField('Евро')
+    dollar1 = StringField('Доллар1')
+    euro1 = StringField('Евро1')
+    dollar2 = StringField('Доллар2')
+    euro2 = StringField('Евро2')
     submit = SubmitField('Сохранить')
 
 

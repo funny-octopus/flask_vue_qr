@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
+    <div class="mb-3">На {{ course.date.strftime("%d.%m.%Y (%H:%M:%S)") }}:</div>
     <div class="row">
         <div class="col">
             <p>
-                <strong>На {{ course.date.strftime("%d.%m.%Y (%H:%M:%S)") }}:</strong>
-                <a class="link-dark" href='/course/r'><i class="bi bi-arrow-repeat" style="font-size:1.5rem"></i></a>
+	        <span><strong>ЦБ</strong></span>
+                <a class="link-dark" href='/course/r'><i class="bi bi-arrow-repeat position-fixed" style="font-size:1.5rem"></i></a>
             </p>
             <ul class="list-group list-group-flush" style="max-width:200px">
                     <li class="list-group-item">
@@ -16,16 +17,52 @@
                     </li>
             </ul>
         </div>
+        <div class="col">
+            <p>
+                <strong>Курс №1:</strong>
+            </p>
+            <ul class="list-group list-group-flush" style="max-width:200px">
+                    <li class="list-group-item">
+                        1<i class="bi bi-currency-dollar"></i> - {{ course.dollar1 }} руб.
+                    </li>
+                    <li class="list-group-item">
+                        1<i class="bi bi-currency-euro"></i> - {{ course.euro1 }} руб.
+                    </li>
+            </ul>
+        </div>
+        <div class="col">
+            <p>
+                <strong>Курс №2:</strong>
+            </p>
+            <ul class="list-group list-group-flush" style="max-width:200px">
+                    <li class="list-group-item">
+                        1<i class="bi bi-currency-dollar"></i> - {{ course.dollar2 }} руб.
+                    </li>
+                    <li class="list-group-item">
+                        1<i class="bi bi-currency-euro"></i> - {{ course.euro2 }} руб.
+                    </li>
+            </ul>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col">
-            <p><strong>Изменить данные вручную:</strong></p>
-            <form action='' class="" style="max-width:300px;" method='POST'>
+	    <form action='' class="" method='POST'>
+            <p><strong>Изменить курс ЦБ:</strong></p>
                 {{ form.csrf_token() }}
                     {{ form.dollar(class_="form-control mb-2", placeholder="Доллар") }}
                     {{ form.euro(class_="form-control mb-2", placeholder="Евро") }}
+        </div>
+        <div class="col">
+            <p><strong>Изменить курс№1:</strong></p>
+                    {{ form.dollar1(class_="form-control mb-2", placeholder="Доллар") }}
+                    {{ form.euro1(class_="form-control mb-2", placeholder="Евро") }}
+        </div>
+        <div class="col">
+            <p><strong>Изменить Курс№2:</strong></p>
+                    {{ form.dollar2(class_="form-control mb-2", placeholder="Доллар") }}
+                    {{ form.euro2(class_="form-control mb-2", placeholder="Евро") }}
                     {{ form.submit(class_="form-control btn btn-primary") }}
-            </form>
+	    </form>
         </div>
     </div>
 </div>

@@ -120,9 +120,10 @@ def catalog():
 @bp.route('/course/<r>', methods=['GET','POST'])
 @login_required
 def course(r=None):
+    old_course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
     if r:
         dollar, euro = get_currency()
-        c = Ruble_course(dollar, euro, datetime.now())
+        c = Ruble_course(dollar, euro, old_course.dollar1, old_course.euro1, old_course.dollar2, old_course.euro2, datetime.now())
         try:
             db.session.add(c)
             db.session.commit()
@@ -132,11 +133,17 @@ def course(r=None):
             # flash('Ошибка при добавлении в базу')
     form = ChangeCurrency()
     if request.method == 'POST' and form.validate_on_submit():
-        c = Ruble_course(form.dollar.data, form.euro.data, datetime.now())
+        d = form.dollar.data if form.dollar.data else old_course.dollar
+        e = form.euro.data if form.euro.data else old_course.euro
+        d1 = form.dollar1.data if form.dollar1.data else old_course.dollar1
+        e1 = form.euro1.data if form.euro1.data else old_course.euro1
+        d2 = form.dollar2.data if form.dollar2.data else old_course.dollar2
+        e2 = form.euro2.data if form.euro2.data else old_course.euro2
+        c = Ruble_course(d, e, d1, e1, d2, e2, datetime.now())
         try:
             db.session.add(c)
             db.session.commit()
-            return redireect('/course')
+            return redirect('course')
         except Exception as e:
             db.session.rollback()
             # flash('Ошибка при добавлении в базу')
