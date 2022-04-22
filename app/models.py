@@ -41,7 +41,7 @@ class Product(db.Model):
     collection = db.Column(db.String(128))
     size = db.Column(db.String(64))
     price = db.Column(db.String(16))
-    course = db.Column(db.Integer)
+    course = db.Column(db.String(16))
     price_v = db.Column(db.Integer, db.ForeignKey('price_v.id'))
     price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
     percent = db.Column(db.String(16)) # процент накрутки
