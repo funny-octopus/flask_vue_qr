@@ -28,6 +28,7 @@ class AddProductForm(FlaskForm):
     size = StringField('Размер', validators=[DataRequired()])
     price = StringField('Цена', validators=[DataRequired()])
     currency = SelectField('Валюта')
+    course = SelectField('Курс')
     price_v = SelectField('Ед.изм.')
     percent = StringField('Наценка(%)', validators=[DataRequired()])
     count = StringField('Кол-во в упаковке', validators=[DataRequired()])

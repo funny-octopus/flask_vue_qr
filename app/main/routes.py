@@ -16,9 +16,19 @@ def item(ident):
     course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
     cur = Currency.query.filter_by(id=product.price_m).first()
     if cur.name.lower() == 'доллар':
-        k = course.dollar
+        if product.course == 'ЦБ':
+            k = course.dollar
+        if product.course == 'Курс №1':
+            k = course.dollar1
+        if product.course == 'Курс №2':
+            k = course.dollar2
     elif cur.name.lower() == 'евро':
-        k = course.euro
+        if product.course == 'ЦБ':
+            k = course.euro
+        if product.course == 'Курс №1':
+            k = course.euro1
+        if product.course == 'Курс №2':
+            k = course.euro2
     else:
         k = '1'
     k = k.replace(',', '.')

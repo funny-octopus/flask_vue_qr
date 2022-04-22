@@ -3,7 +3,7 @@ var app = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         ident:null,
-        select_list:['category', 'country', 'currency', 'price_v'],
+        select_list:['category', 'country', 'currency', 'price_v', 'course'],
         resp:null,
         items:null,
         changes_flag:true,

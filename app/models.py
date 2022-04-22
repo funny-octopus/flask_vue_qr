@@ -41,14 +41,15 @@ class Product(db.Model):
     collection = db.Column(db.String(128))
     size = db.Column(db.String(64))
     price = db.Column(db.String(16))
+    course = db.Column(db.Integer)
     price_v = db.Column(db.Integer, db.ForeignKey('price_v.id'))
     price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
     percent = db.Column(db.String(16)) # процент накрутки
     count = db.Column(db.String(16))
     notes = db.Column(db.Text)
 
-    def __init__(self, name, category, factory, provider, country, collection,\
-            size ,price, price_v, price_m, percent, count, notes='',\
+    def __init__(self, name, category, factory, provider, country, collection,
+            size ,price, price_v, price_m, percent, count, notes='', course=0,
             image_url='big_default.png', sm_image_url='sm_default.png'):
         self.name = name
         self.category = category
@@ -58,6 +59,7 @@ class Product(db.Model):
         self.collection = collection
         self.size = size
         self.price = price
+        self.course = course
         self.price_v = price_v
         self.price_m = price_m
         self.percent = percent
