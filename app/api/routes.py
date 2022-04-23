@@ -51,12 +51,12 @@ class Item(Resource):
         prod.country = country_id.id
         prod.collection = resp['collection']['value']
         prod.size = resp['size']['value']
-        prod.price = resp['price']['value'].strip().replace(' ', '').replace(',','.')
+        prod.price = str(resp['price']['value']).strip().replace(' ', '').replace(',','.')
         prod.course = resp['course']['value']
         prod.price_v = pricev_id.id
         prod.price_m = cur_id.id
-        prod.percent = resp['percent']['value'].strip().replace(' ', '').replace(',','.')
-        prod.count = resp['count']['value'].strip().replace(' ', '').replace(',','.')
+        prod.percent = str(resp['percent']['value']).strip().replace(' ', '').replace(',','.')
+        prod.count = str(resp['count']['value']).strip().replace(' ', '').replace(',','.')
         prod.notes = resp['notes']['value']
         prod.set_article()
         try:
