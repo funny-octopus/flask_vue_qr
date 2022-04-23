@@ -49,7 +49,7 @@ class Product(db.Model):
     notes = db.Column(db.Text)
 
     def __init__(self, name, category, factory, provider, country, collection,
-            size ,price, price_v, price_m, percent, count, notes='', course=0,
+            size ,price, price_v, price_m, percent, count, notes='', course="ЦБ",
             image_url='big_default.png', sm_image_url='sm_default.png'):
         self.name = name
         self.category = category

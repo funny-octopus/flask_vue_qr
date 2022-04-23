@@ -89,7 +89,8 @@ def add_product():
                 resp['currency'],\
                 resp['percent'].replace(',','.').replace(' ','').strip(),\
                 resp['count'],\
-                resp['notes'])
+                resp['notes'],
+                resp['course'])
         try:
             db.session.add(prod)
             db.session.commit()
