@@ -74,6 +74,7 @@ def add_product():
     form.country.choices = [('','')]+[(x.id,x.name) for x in cos]
     form.price_v.choices = [('','')]+[(x.id,x.name) for x in prvs]
     form.currency.choices = [('','')]+[(x.id,x.name) for x in curs]
+    form.course.choices=[('',''), ("ЦБ", "ЦБ"), ("Курс №1", "Курс №1"), ("Курс №2", "Курс №2")]
     if request.method == 'POST' and form.validate_on_submit():
         resp = request.form
         prod = Product(resp['name'],\
