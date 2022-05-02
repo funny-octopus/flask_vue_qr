@@ -126,6 +126,7 @@ class Products(Resource):
             products = category.products.filter_by(collection=args.get('collection'))
         if args.get('provider'):
             products = category.products.filter_by(provider=args.get('provider'))
+        print(products.statement)
         products = products.order_by(Product.name).all()
         pr = [{'id':x.id,\
                 'name':x.name,\
