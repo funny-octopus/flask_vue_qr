@@ -65,7 +65,7 @@ var appp = new Vue({
     },
     methods:{
         get_items:function(id_ = this.cat_id){
-		console.log("GET")
+	    this.cat_id = id_;
             this.items=[];
             this.cur_cat = 'product';
             this.link_back = true;
