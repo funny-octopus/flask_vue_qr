@@ -120,13 +120,13 @@ class Products(Resource):
         category = Category.query.get(category_id)
         # products = category.products.order_by(Product.name).all()
         products = category.products
-        if args.get('factory'):
-            products = category.products.filter_by(factory=args.get('factory'))
-        if args.get('collection'):
-            products = category.products.filter_by(collection=args.get('collection'))
-        if args.get('provider'):
-            products = category.products.filter_by(provider=args.get('provider'))
-        print(products.statement)
+        items = {}
+        if args.get('factory'): items.update({'factory': args.get('factory')})
+        if args.get('collection'): items.update({'collection': args.get('collection')})
+        if args.get('provider'): items.update({'provider': args.get('provider')})
+        # print(products.statement)
+        if items:
+            products = products.filter_by(**items)
         products = products.order_by(Product.name).all()
         pr = [{'id':x.id,\
                 'name':x.name,\
@@ -138,20 +138,26 @@ class Products(Resource):
 
         category = Category.query.get(category_id)
         items = category.products
-        if args.get('collection'): items = items.filter_by(collection=args.get('collection'))
-        if args.get('provider'): items = items.filter_by(provider=args.get('provider'))
+        props = {}
+        if args.get('collection'): props.update({'collection': args.get('collection')})
+        if args.get('provider'): props.update({'provider': args.get('provider')})
+        if props: items = items.filter_by(**props) 
         f = [x.factory for x in items.all()]
 
         category = Category.query.get(category_id)
         items = category.products
-        if args.get('factory'): items = items.filter_by(factory=args.get('factory'))
-        if args.get('provider'): items = items.filter_by(provider=args.get('provider'))
+        props = {}
+        if args.get('factory'): props.update({'factory': args.get('factory')})
+        if args.get('provider'): props.update({'provider': args.get('provider')})
+        if props: items = items.filter_by(**props) 
         c = [x.collection for x in items.all()]
 
         category = Category.query.get(category_id)
         items = category.products
-        if args.get('collection'): items = items.filter_by(collection=args.get('collection'))
-        if args.get('factory'): items = items.filter_by(factory=args.get('factory'))
+        props = {}
+        if args.get('collection'): props.update({'collection': args.get('collection')})
+        if args.get('factory'): props.update({'factory': args.get('factory')})
+        if props: items = items.filter_by(**props) 
         p = [x.provider for x in items.all()]
 
         return {'status':'ok','items':pr, 'factories':f, 'collections':c, 'providers':p}
