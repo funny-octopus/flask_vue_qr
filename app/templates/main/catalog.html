@@ -8,7 +8,7 @@
 <div id='app' class="container" v-cloak>
     <div class="row mb-3" v-show="link_back">
         <div class="d-flex justify-content-between">
-            <a href="#" class="link-primary mx-3"@click="change_cur_cat()"><i class="bi bi-arrow-left" style="font-size:2rem;"></i></a>
+            <a href="#" class="link-primary mx-3"@click="change_cur_cat()" data-qa="back-arrow"><i class="bi bi-arrow-left" style="font-size:2rem;"></i></a>
             <input type="text" placeholder="Фильтр" v-model="filt">
         </div>
     </div>
@@ -16,26 +16,33 @@
         <div class="col">
             <div class="d-flex justify-content-start">
                 <div class="mx-2">
-                    <span>Фабрика:</span>
-                    <select v-model="factory" @change="page_number=0" class="form-select form-select-sm">
+                    <span data-qa="span_factory">Фабрика:</span>
+                    <select v-model="factory" @change="get_items()" class="form-select form-select-sm" data-qa="select_factory">
                         <option value="all">Все</option>
                         <option v-for="f in factories">[[ f ]]</option>
                     </select>
                 </div>
                 <div class="mx-2">
-                    <span>Коллекция:</span>
-                    <select v-model="collection" @change="page_number=0" class="form-select form-select-sm">
+                    <span data-qa="span_collection">Коллекция:</span>
+                    <select v-model="collection" @change="get_items()" class="form-select form-select-sm" data-qa="select_collection">
                         <option value="all">Все</option>
                         <option v-for="c in collections">[[ c ]]</option>
                     </select>
                 </div>
+                <div class="mx-2">
+                    <span data-qa="span_provider">Поставщик:</span>
+                    <select v-model="provider" @change="get_items()" class="form-select form-select-sm" data-qa="select_provider">
+                        <option value="all">Все</option>
+                        <option v-for="p in providers">[[ p ]]</option>
+                    </select>
+		</div>
             </div>
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 row-cols-xxl-4">
         <div v-for="item in paginated_data">
             <!-- <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 text-center d-block" key="prod"> -->
-            <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 d-flex justify-content-between align-items-center link-dark text-decoration-none" key="prod" style="height:90px;">
+            <a :href="'/item/'+item.id" v-if="cur_cat==='product'" class="col m-2 border rounded shadow-sm p-2 d-flex justify-content-between align-items-center link-dark text-decoration-none" key="prod" style="height:90px;" data-qa="category_item">
                 <div class="flex-shrink-0">
                     <img :src="'/static/images/'+item.sm_image_url"/>
                 </div>
@@ -44,7 +51,7 @@
                     <small class="text-muted">[[ item.article ]]</small>
                 </div>
             </a>
-            <a href="#" v-else class="col m-2 border rounded shadow-sm p-2 d-block link-dark text-decoration-none d-flex align-items-center" @click="get_items(item.id)" key="cat" style="height:90px;">
+            <a href="#" v-else class="col m-2 border rounded shadow-sm p-2 d-block link-dark text-decoration-none d-flex align-items-center" @click="get_items(item.id)" key="cat" style="height:90px;" :data-qa="item.name">
                 <div class="text-center mx-auto">
                     <small class="text-muted">[[ item.id ]].</small>[[ item.name ]]
                 </div>

@@ -144,3 +144,6 @@ ruble.py
 # libs
 axios.min.js
 vue.min.js
+
+# config
+config.py

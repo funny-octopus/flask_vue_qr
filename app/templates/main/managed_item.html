@@ -20,7 +20,7 @@
             </form>
         </div>         
         <div class="col-12 col-sm-8">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" data-qa="props">
                 <li v-for="(value, name) in resp.product" class="list-group-item d-flex justify-content-between">
                     <!-- <div><strong>[[ value.title ]]</strong><a class="mx-1" v-if="select_list.includes(name)"><i class="bi bi-plus-circle"></i></a></div> -->
                     <strong>[[ value.title ]]</strong>
@@ -28,11 +28,13 @@
                             type="text"
                              v-if="select_list.includes(name)"
                              v-model="resp.product[name].value"
-                             @change="changes_flag=false">
+                             @change="changes_flag=false"
+			     :data-qa="name">
                         <option v-for="val in items.items[name]" >[[ val ]]</option>
                     </select>
-                    <input class="w-50" v-else-if="name === 'article'" type="text" v-model="resp.product[name].value" @change="changes_flag=false" readOnly="true"/>
-                    <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=false"/>
+                    <input class="w-50" v-else-if="name === 'article'" type="text" v-model="resp.product[name].value" @change="changes_flag=false" readOnly="true" :data-qa="name"/>
+		    <textarea class="w-50" v-else-if="name === 'notes'" v-model="resp.product[name].value" @change="changes_flag=false" :data-qa="name"></textarea>
+                    <input class="w-50" v-else type="text" v-model="resp.product[name].value" @change="changes_flag=false" :data-qa="name"/>
                 </li>
             </ul>
             <!-- <div class="text-end mt-3"> -->

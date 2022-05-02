@@ -16,17 +16,28 @@ def item(ident):
     course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
     cur = Currency.query.filter_by(id=product.price_m).first()
     if cur.name.lower() == 'доллар':
-        k = course.dollar
+        if product.course == 'ЦБ' or not product.course:
+            k = course.dollar
+        if product.course == 'Курс №1':
+            k = course.dollar1
+        if product.course == 'Курс №2':
+            k = course.dollar2
     elif cur.name.lower() == 'евро':
-        k = course.euro
+        if product.course == 'ЦБ' or not product.course:
+            k = course.euro
+        if product.course == 'Курс №1':
+            k = course.euro1
+        if product.course == 'Курс №2':
+            k = course.euro2
     else:
         k = '1'
     k = k.replace(',', '.')
     price = (float(product.price)*float(k))*((float(product.percent)/100)+1.0)
     price = math.ceil(price)
-    items = db.session.query(Product, Country)\
+    items = db.session.query(Product, Country, Price_v)\
             .filter_by(id=int(ident))\
             .join(Country)\
+            .join(Price_v)\
             .first()
     if current_user.is_authenticated:
         form = ChangeImageForm()
@@ -48,7 +59,7 @@ def item(ident):
                         db.rollback()
         return render_template('main/managed_item.html', product=items[0], ident=ident, form=form)
     else:
-        return render_template('main/item.html', product=items[0], country=items[1], price=price)
+        return render_template('main/item.html', product=items[0], country=items[1], price=price, price_v=items[2])
 
 
 @bp.route('/add/', methods=['GET', 'POST'])
@@ -63,11 +74,13 @@ def add_product():
     form.country.choices = [('','')]+[(x.id,x.name) for x in cos]
     form.price_v.choices = [('','')]+[(x.id,x.name) for x in prvs]
     form.currency.choices = [('','')]+[(x.id,x.name) for x in curs]
+    form.course.choices=[('',''), ("ЦБ", "ЦБ"), ("Курс №1", "Курс №1"), ("Курс №2", "Курс №2")]
     if request.method == 'POST' and form.validate_on_submit():
         resp = request.form
         prod = Product(resp['name'],\
                 resp['category'],\
                 resp['factory'],\
+                resp['provider'],\
                 resp['country'],\
                 resp['collection'],\
                 resp['size'],\
@@ -75,7 +88,9 @@ def add_product():
                 resp['price_v'],\
                 resp['currency'],\
                 resp['percent'].replace(',','.').replace(' ','').strip(),\
-                resp['count'])
+                resp['count'],\
+                resp['notes'],
+                resp['course'])
         try:
             db.session.add(prod)
             db.session.commit()
@@ -117,9 +132,10 @@ def catalog():
 @bp.route('/course/<r>', methods=['GET','POST'])
 @login_required
 def course(r=None):
+    old_course = Ruble_course.query.order_by(Ruble_course.id.desc()).first()
     if r:
         dollar, euro = get_currency()
-        c = Ruble_course(dollar, euro, datetime.now())
+        c = Ruble_course(dollar, euro, old_course.dollar1, old_course.euro1, old_course.dollar2, old_course.euro2, datetime.now())
         try:
             db.session.add(c)
             db.session.commit()
@@ -129,11 +145,17 @@ def course(r=None):
             # flash('Ошибка при добавлении в базу')
     form = ChangeCurrency()
     if request.method == 'POST' and form.validate_on_submit():
-        c = Ruble_course(form.dollar.data, form.euro.data, datetime.now())
+        d = form.dollar.data if form.dollar.data else old_course.dollar
+        e = form.euro.data if form.euro.data else old_course.euro
+        d1 = form.dollar1.data if form.dollar1.data else old_course.dollar1
+        e1 = form.euro1.data if form.euro1.data else old_course.euro1
+        d2 = form.dollar2.data if form.dollar2.data else old_course.dollar2
+        e2 = form.euro2.data if form.euro2.data else old_course.euro2
+        c = Ruble_course(d, e, d1, e1, d2, e2, datetime.now())
         try:
             db.session.add(c)
             db.session.commit()
-            return redireect('/course')
+            return redirect('course')
         except Exception as e:
             db.session.rollback()
             # flash('Ошибка при добавлении в базу')

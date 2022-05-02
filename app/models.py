@@ -36,29 +36,35 @@ class Product(db.Model):
     sm_image_url = db.Column(db.String(64))
     article = db.Column(db.String(64), index=True)
     factory = db.Column(db.String(128))
+    provider = db.Column(db.String(128))
     country = db.Column(db.Integer, db.ForeignKey('country.id'))
     collection = db.Column(db.String(128))
     size = db.Column(db.String(64))
     price = db.Column(db.String(16))
+    course = db.Column(db.String(16))
     price_v = db.Column(db.Integer, db.ForeignKey('price_v.id'))
     price_m = db.Column(db.Integer, db.ForeignKey('currency.id'))
     percent = db.Column(db.String(16)) # процент накрутки
     count = db.Column(db.String(16))
+    notes = db.Column(db.Text)
 
-    def __init__(self, name, category, factory, country, collection,\
-            size ,price, price_v, price_m, percent, count,\
+    def __init__(self, name, category, factory, provider, country, collection,
+            size ,price, price_v, price_m, percent, count, notes='', course="ЦБ",
             image_url='big_default.png', sm_image_url='sm_default.png'):
         self.name = name
         self.category = category
         self.factory = factory
+        self.provider = provider
         self.country = country
         self.collection = collection
         self.size = size
         self.price = price
+        self.course = course
         self.price_v = price_v
         self.price_m = price_m
         self.percent = percent
         self.count = count
+        self.notes = notes
         self.image_url = image_url
         self.sm_image_url = sm_image_url
 
@@ -115,10 +121,18 @@ class Ruble_course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dollar = db.Column(db.String(16))
     euro = db.Column(db.String(16))
+    dollar1 = db.Column(db.String(16))
+    euro1 = db.Column(db.String(16))
+    dollar2 = db.Column(db.String(16))
+    euro2 = db.Column(db.String(16))
     date = db.Column(db.DateTime(timezone=True))
 
-    def __init__(self, dollar, euro, date):
+    def __init__(self, dollar, euro, dollar1, euro1, dollar2, euro2, date):
         self.dollar = dollar
         self.euro = euro
+        self.dollar1 = dollar1
+        self.euro1 = euro1
+        self.dollar2 = dollar2
+        self.euro2 = euro2
         self.date = date
 
